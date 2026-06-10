@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preventivatore Operatori – Top Eventi Noleggio</title>
+<style>
+:root{
+  --rosso:#d4202a; --rosso-scuro:#a8161e;
+  --blu:#16308c; --blu-scuro:#0f2266;
+  --grigio:#f4f5f8; --bordo:#dfe3ee; --testo:#1d2333; --muto:#6b7280;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,Arial,sans-serif;color:var(--testo);background:var(--grigio);line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(100deg,var(--blu) 0%,var(--blu-scuro) 60%,var(--rosso) 160%);color:#fff;padding:20px 0}
+header .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:22px;letter-spacing:.5px}
+.logo span{color:#ffd2d5}
+.tag{font-size:13px;opacity:.9}
+.badge{margin-left:auto;background:rgba(255,255,255,.15);padding:6px 12px;border-radius:20px;font-size:12px}
+
+.grid{display:grid;grid-template-columns:1fr 360px;gap:22px;padding:24px 0 60px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--bordo);border-radius:14px;padding:22px;margin-bottom:18px;box-shadow:0 1px 3px rgba(20,30,60,.04)}
+.card>h2{font-size:17px;display:flex;align-items:center;gap:10px;margin-bottom:16px;color:var(--blu)}
+.num{background:var(--rosso);color:#fff;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex:0 0 auto}
+label{display:block;font-size:13px;font-weight:600;margin:10px 0 4px;color:var(--testo)}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--bordo);border-radius:9px;font-size:14px;font-family:inherit;background:#fff}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blu);box-shadow:0 0 0 3px rgba(22,48,140,.12)}
+textarea{resize:vertical;min-height:60px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.row{grid-template-columns:1fr}}
+.hint{font-size:12px;color:var(--muto);margin-top:4px}
+.chk{display:flex;align-items:flex-start;gap:9px;margin:8px 0;font-size:14px;font-weight:500}
+.chk input{width:auto;margin-top:3px}
+.seg{display:inline-flex;background:var(--grigio);border:1px solid var(--bordo);border-radius:10px;padding:4px;gap:4px}
+.seg button{border:none;background:transparent;padding:8px 18px;border-radius:7px;font-weight:600;font-size:14px;cursor:pointer;color:var(--muto)}
+.seg button.on{background:var(--blu);color:#fff}
+
+/* prodotti */
+.filt{display:grid;grid-template-columns:1fr 220px;gap:10px}
+@media(max-width:560px){.filt{grid-template-columns:1fr}}
+.search-bar{position:relative}
+.search-bar input{padding-left:38px}
+.search-ic{position:absolute;left:12px;top:11px;color:var(--muto)}
+.results{max-height:340px;overflow:auto;border:1px solid var(--bordo);border-radius:10px;margin-top:10px}
+.pitem{display:flex;align-items:center;gap:12px;padding:9px 12px;border-bottom:1px solid var(--grigio)}
+.pitem:last-child{border-bottom:none}
+.pitem:hover{background:#fafbff}
+.pitem img{width:46px;height:46px;object-fit:cover;border-radius:7px;background:var(--grigio);flex:0 0 auto}
+.pitem .pn{flex:1;font-size:13px}
+.pitem .pp{font-weight:700;color:var(--blu);font-size:13px;white-space:nowrap}
+.pitem .add{background:var(--rosso);color:#fff;border:none;width:30px;height:30px;border-radius:7px;font-size:18px;cursor:pointer;flex:0 0 auto}
+.pitem .vsel{margin-top:5px;width:100%;font-size:12px;padding:5px 8px;border-radius:6px}
+.vtag{display:inline-block;background:#eef0fb;color:var(--blu);font-size:10px;font-weight:700;border-radius:5px;padding:1px 6px;margin-left:6px}
+.ctag{display:inline-block;background:#f1f1f4;color:var(--muto);font-size:10px;border-radius:5px;padding:1px 6px;margin-left:6px}
+.cart{margin-top:6px}
+.crow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--grigio)}
+.crow .cn{flex:1;font-size:13px}
+.crow .cn small{color:var(--muto);display:block;font-size:11px}
+.qty{display:flex;align-items:center;border:1px solid var(--bordo);border-radius:7px;overflow:hidden}
+.qty button{border:none;background:var(--grigio);width:28px;height:30px;font-size:16px;cursor:pointer;color:var(--blu)}
+.qty input{width:38px;border:none;text-align:center;border-radius:0;padding:6px 2px}
+.crow .cp{font-weight:700;width:78px;text-align:right;font-size:13px}
+.crow .del{background:none;border:none;color:var(--rosso);cursor:pointer;font-size:16px}
+.crow-wrap{padding:6px 0;border-bottom:1px solid var(--grigio)}
+.crow-wrap .crow{border-bottom:none;padding:4px 0}
+.punit{display:flex;align-items:center;gap:4px;flex:0 0 auto}
+.pprice{width:72px;font-size:13px;padding:6px 7px;text-align:right}
+.punit span{font-size:10px;color:var(--muto)}
+.pnote{width:100%;font-size:12px;padding:6px 9px;margin-top:2px;border:1px dashed var(--bordo);border-radius:7px}
+.pnote:focus{border-style:solid;border-color:var(--blu)}
+.empty{color:var(--muto);font-size:13px;padding:14px 0;text-align:center}
+
+.warehouses{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+@media(max-width:560px){.warehouses{grid-template-columns:1fr}}
+.wh{border:1px solid var(--bordo);border-radius:10px;padding:14px;cursor:pointer}
+.wh.on{border-color:var(--blu);background:#f5f7ff}
+.wh b{display:block;color:var(--blu)}
+.wh small{color:var(--muto);font-size:12px}
+
+/* sidebar */
+.side{position:sticky;top:18px;align-self:start}
+.side h3{color:var(--rosso);font-size:15px;margin-bottom:12px}
+.line{display:flex;justify-content:space-between;font-size:13px;margin:7px 0;color:var(--muto)}
+.line b{color:var(--testo)}
+.tot{border-top:2px solid var(--bordo);margin-top:12px;padding-top:12px;display:flex;justify-content:space-between;font-size:20px;font-weight:800;color:var(--blu)}
+.coeff-box{background:var(--grigio);border-radius:9px;padding:10px 12px;font-size:12px;color:var(--muto);margin:8px 0}
+.coeff-box b{color:var(--blu)}
+.trasp-line{display:flex;justify-content:space-between;font-size:14px;font-weight:700;color:var(--blu-scuro);background:#eef7ff;border:1px solid #cfe4ff;border-radius:9px;padding:10px 12px;margin-top:10px}
+.btn{display:block;width:100%;border:none;border-radius:10px;padding:13px;font-size:15px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn-pdf{background:var(--rosso);color:#fff}
+.btn-pdf:hover{background:var(--rosso-scuro)}
+.hide{display:none!important}
+footer{text-align:center;color:var(--muto);font-size:12px;padding:24px}
+.btn-ai{background:#7b2ff7;color:#fff;border:none;border-radius:9px;padding:11px 18px;font-weight:700;cursor:pointer}
+.btn-ai:hover{background:#6a1fe0}
+.btn-ai:disabled{opacity:.5;cursor:not-allowed}
+#aibox textarea{min-height:120px}
+#renthub .rh-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+#renthub iframe{width:100%;height:640px;border:1px solid var(--bordo);border-radius:10px;background:#fff}
+#trello .tr-bar{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+#trello .tr-bar select{max-width:340px}
+.btn-tr{background:#0079bf;color:#fff;border:none;border-radius:9px;padding:11px 18px;font-weight:700;cursor:pointer}
+.btn-tr:hover{background:#026aa7}
+.btn-tr:disabled{opacity:.5;cursor:not-allowed}
+.tr-ghost{background:var(--grigio);border:1px solid var(--bordo);border-radius:8px;padding:8px 12px;cursor:pointer;font-size:13px;color:var(--blu)}
+.tr-ghost:hover{border-color:var(--blu)}
+.tr-body{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;align-items:flex-start}
+.tr-list{flex:0 0 240px;background:var(--grigio);border:1px solid var(--bordo);border-radius:10px;padding:10px}
+.tr-list h4{font-size:13px;color:var(--blu);margin-bottom:8px;display:flex;justify-content:space-between}
+.tr-list h4 span{color:var(--muto);font-weight:400}
+.tr-card{background:#fff;border:1px solid var(--bordo);border-radius:7px;padding:8px 10px;margin-bottom:7px;font-size:12.5px;cursor:pointer;text-decoration:none;color:var(--testo);display:block}
+.tr-card:hover{border-color:var(--blu)}
+.tr-labels{display:flex;gap:4px;margin-bottom:4px;flex-wrap:wrap}
+.tr-label{height:8px;width:34px;border-radius:4px}
+.tr-due{font-size:11px;color:var(--muto);margin-top:4px}
+
+/* ====== CALCOLATORE TRASPORTI (scoped #tcalc) ====== */
+#tcalc{margin-top:14px}
+#tcalc .status-bar{display:inline-flex;align-items:center;gap:8px;font-size:12px;padding:6px 12px;border-radius:20px;margin-bottom:14px}
+#tcalc .status-bar.active{background:#d5f5e3;color:#1e8449}
+#tcalc .status-bar.inactive{background:#fdecea;color:#c0392b}
+#tcalc .status-dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+#tcalc .tcard{background:#fbfcfe;border:1px solid var(--bordo);border-radius:11px;padding:18px;margin-bottom:14px}
+#tcalc .section-title{font-size:14px;font-weight:bold;color:var(--blu);margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--grigio);display:flex;align-items:center;gap:10px}
+#tcalc .tnum{background:var(--blu);color:#fff;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;flex-shrink:0}
+#tcalc label.field-label{display:block;font-size:11px;font-weight:700;color:var(--muto);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+#tcalc .form-group{margin-bottom:14px}
+#tcalc .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+#tcalc .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media(max-width:680px){#tcalc .grid-2,#tcalc .grid-3{grid-template-columns:1fr}}
+#tcalc .vehicle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+#tcalc .vehicle-card{border:2px solid var(--bordo);border-radius:10px;padding:14px 8px;cursor:pointer;text-align:center;transition:.15s}
+#tcalc .vehicle-card:hover{border-color:var(--blu);background:#f0f7ff}
+#tcalc .vehicle-card.selected{border-color:var(--blu);background:#e8f0fd;box-shadow:0 0 0 3px rgba(22,48,140,.12)}
+#tcalc .v-icon{font-size:30px;margin-bottom:6px}
+#tcalc .v-name{font-weight:bold;font-size:13px;color:var(--blu)}
+#tcalc .v-specs{font-size:11px;color:var(--muto);margin-top:4px;line-height:1.4}
+#tcalc .v-cost{font-size:11px;color:#27ae60;font-weight:700;margin-top:4px}
+#tcalc .load-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+#tcalc .load-option{border:2px solid var(--bordo);border-radius:10px;padding:14px;cursor:pointer;text-align:center;transition:.15s}
+#tcalc .load-option:hover{border-color:var(--blu)}
+#tcalc .load-option.selected{border-color:var(--blu);background:#e8f0fd}
+#tcalc .load-pct{font-size:24px;font-weight:bold;color:var(--blu)}
+#tcalc .load-desc{font-size:11px;color:var(--muto);margin-top:3px}
+#tcalc .load-detail{font-size:11px;margin-top:3px;font-weight:600}
+#tcalc .toggle-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:680px){#tcalc .toggle-grid{grid-template-columns:1fr}}
+#tcalc .toggle-item{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1.5px solid var(--bordo);border-radius:10px;cursor:pointer;transition:.15s;user-select:none}
+#tcalc .toggle-item:hover{border-color:var(--blu);background:#f8fbff}
+#tcalc .toggle-item.active{border-color:var(--blu);background:#f0f7ff}
+#tcalc .t-label{font-size:13px;color:var(--testo);font-weight:600}
+#tcalc .t-sub{font-size:11px;color:var(--muto);margin-top:2px}
+#tcalc .toggle-sw{width:44px;height:24px;background:var(--bordo);border-radius:12px;position:relative;transition:.2s;flex-shrink:0}
+#tcalc .toggle-sw.on{background:var(--blu)}
+#tcalc .toggle-sw::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+#tcalc .toggle-sw.on::after{transform:translateX(20px)}
+#tcalc .people-grid{display:flex;gap:10px;margin-top:8px}
+#tcalc .people-btn{flex:1;padding:10px 6px;border:2px solid var(--bordo);border-radius:10px;background:#fff;cursor:pointer;font-size:16px;font-weight:bold;color:var(--blu);text-align:center;transition:.15s;line-height:1.3}
+#tcalc .people-btn:hover{border-color:var(--blu)}
+#tcalc .people-btn.selected{border-color:var(--blu);background:#e8f0fd}
+#tcalc .people-sub{font-size:10px;font-weight:normal;color:var(--muto);display:block;margin-top:2px}
+#tcalc .stop-row{display:flex;gap:8px;margin-bottom:10px;align-items:center}
+#tcalc .stop-row input{flex:1}
+#tcalc .btn-remove-stop{background:var(--rosso);color:#fff;border:none;border-radius:8px;width:36px;height:42px;cursor:pointer;font-size:15px;flex-shrink:0}
+#tcalc .btn-add-stop{background:none;border:1.5px dashed var(--blu);color:var(--blu);border-radius:8px;padding:8px 16px;cursor:pointer;font-size:13px;margin-top:6px}
+#tcalc .km-ar-box{background:#f0f7ff;border:1.5px solid var(--blu);border-radius:8px;padding:8px 12px;text-align:center;display:flex;flex-direction:column;justify-content:center;height:100%}
+#tcalc .km-ar-value{font-size:22px;font-weight:bold;color:var(--blu)}
+#tcalc .km-ar-label{font-size:11px;color:var(--muto);margin-top:2px}
+#tcalc .flex-end{display:flex;align-items:flex-end;gap:12px}
+#tcalc .mt-16{margin-top:14px}
+#tcalc .btn-maps{background:#27ae60;color:#fff;border:none;border-radius:8px;padding:0 16px;font-size:13px;cursor:pointer;white-space:nowrap;height:42px;display:none;align-items:center;gap:6px}
+#tcalc .btn-maps:hover{background:#229954}
+#tcalc .btn-calculate{width:100%;background:linear-gradient(135deg,var(--blu),var(--blu-scuro));color:#fff;border:none;border-radius:11px;padding:15px;font-size:15px;font-weight:bold;cursor:pointer;letter-spacing:.3px;box-shadow:0 4px 14px rgba(22,48,140,.22)}
+#tcalc .btn-calculate:hover{opacity:.93}
+#tcalc #results-section{display:none;margin-top:14px}
+#tcalc .results-card{background:#fff;border:1px solid var(--bordo);border-radius:11px;overflow:hidden}
+#tcalc .results-head{background:linear-gradient(135deg,var(--blu),var(--blu-scuro));color:#fff;padding:16px 20px}
+#tcalc .results-head h4{font-size:16px}
+#tcalc .results-head p{font-size:12px;opacity:.85;margin-top:4px}
+#tcalc .results-body{padding:18px 20px}
+#tcalc .breakdown-table{width:100%;border-collapse:collapse;margin-bottom:8px}
+#tcalc .breakdown-table tr td{padding:8px 4px;font-size:13px;border-bottom:1px solid #f0f2f5}
+#tcalc .td-label{color:#566676}
+#tcalc .td-val{text-align:right;font-weight:600;color:var(--testo)}
+#tcalc .tr-total td{font-weight:bold;font-size:15px;color:var(--blu);border-top:2px solid var(--blu)!important;padding-top:10px!important}
+#tcalc .price-hero{background:linear-gradient(135deg,#eef6fd,#daeaf7);border-radius:11px;padding:18px;margin:16px 0;text-align:center}
+#tcalc .ph-label{font-size:12px;color:#566676;text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+#tcalc .ph-amount{font-size:38px;font-weight:bold;color:var(--blu);margin:6px 0;line-height:1}
+#tcalc .ph-note{font-size:12px;color:var(--muto)}
+#tcalc .disc-title{font-size:12px;color:#566676;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px}
+#tcalc .discounts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:680px){#tcalc .discounts-grid{grid-template-columns:1fr}}
+#tcalc .disc-card{border:1.5px solid var(--bordo);border-radius:10px;padding:14px;text-align:center}
+#tcalc .disc-badge{display:inline-block;background:var(--rosso);color:#fff;font-size:11px;font-weight:bold;padding:3px 8px;border-radius:5px;margin-bottom:8px}
+#tcalc .disc-price{font-size:20px;font-weight:bold;color:var(--blu)}
+#tcalc .disc-desc{font-size:10px;color:var(--muto);margin-top:5px;line-height:1.4}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div>
+      <div class="logo">TOP EVENTI <span>NOLEGGIO</span></div>
+      <div class="tag">Preventivatore interno operatori</div>
+    </div>
+    <div class="badge">Noleggio + calcolo trasporto</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="card" id="aibox">
+    <h2><span class="num" style="background:#7b2ff7">AI</span> Assistente preventivo — incolla la mail del cliente</h2>
+    <textarea id="ai_email" placeholder="Incolla qui il testo della mail di richiesta del cliente…"></textarea>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;align-items:center">
+      <button class="btn-ai" id="btnAI">✨ Interpreta con AI e precompila</button>
+      <button class="tr-ghost" id="btnRules">📚 Istruzioni apprese</button>
+      <span class="hint" id="aiStatus"></span>
+    </div>
+    <div id="aiResult" class="hide" style="margin-top:12px"></div>
+    <div id="rulesBox" class="hide" style="margin-top:12px">
+      <label>Istruzioni per l'AI (una per riga) — verranno usate ad ogni interpretazione per migliorare le risposte</label>
+      <textarea id="ai_rules" style="min-height:90px" placeholder="Es. «sedia chiavarina» = Sedia Chiavarina Oro; se non indicano i giorni considera 1 giorno; «bicchieri» = calici se evento elegante…"></textarea>
+      <div class="hint">Salvate nel tuo browser. Aggiungile man mano: l'AI le terrà presenti la volta successiva.</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="card" id="renthub">
+    <h2><span class="num" style="background:#1f9d55">R</span> Disponibilità materiale — RentHub</h2>
+    <div class="rh-bar">
+      <button class="btn-tr" id="rhWin" style="background:#1f9d55">🪟 Apri RentHub in finestra affiancata</button>
+      <button class="tr-ghost" id="rhTab">↗ Apri in nuova scheda</button>
+    </div>
+    <p class="hint" style="margin-bottom:0">RentHub non consente di essere incorporato nella pagina, quindi si apre in una finestra a parte da tenere accanto al preventivatore. Al primo accesso fai login (con l'authenticator); finché la finestra resta aperta non dovrai rifarlo.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="card" id="trello">
+    <h2><span class="num" style="background:#0079bf">T</span> Piano trasporti — Trello</h2>
+    <div id="trelloConnect">
+      <p class="hint" id="trelloMsg">Collega il tuo account Trello per consultare il piano trasporti senza uscire dal preventivatore.</p>
+      <button class="btn-tr" id="btnTrelloConnect">🔗 Collega Trello</button>
+    </div>
+    <div id="trelloPanel" class="hide">
+      <div class="tr-bar">
+        <select id="trelloBoard"><option value="">— Scegli una bacheca —</option></select>
+        <button class="tr-ghost" id="btnTrelloReload">↻ Aggiorna</button>
+        <button class="tr-ghost" id="btnTrelloLogout">Scollega</button>
+      </div>
+      <div id="trelloBody" class="tr-body"><div class="empty">Seleziona una bacheca dal menu.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="grid">
+  <div>
+
+    <!-- 1. PRODOTTI -->
+    <div class="card">
+      <h2><span class="num">1</span> Prodotti a noleggio</h2>
+      <div class="filt">
+        <div class="search-bar">
+          <span class="search-ic">🔍</span>
+          <input id="search" placeholder="Cerca per nome… (es. divano, gazebo, piatto)">
+        </div>
+        <select id="catFilter"><option value="">Tutte le categorie</option></select>
+      </div>
+      <div class="results" id="results"></div>
+      <div class="cart" id="cart"><div class="empty">Nessun prodotto selezionato.</div></div>
+    </div>
+
+    <!-- 2. CONSEGNA / RITIRO -->
+    <div class="card">
+      <h2><span class="num">2</span> Consegna e ritiro</h2>
+
+      <div class="row">
+        <div>
+          <label id="lbl_data1">Data consegna <span style="color:var(--muto);font-weight:400">(opzionale)</span></label>
+          <input id="data_consegna" type="date">
+        </div>
+        <div>
+          <label id="lbl_data2">Data ritiro <span style="color:var(--muto);font-weight:400">(opzionale)</span></label>
+          <input id="data_ritiro" type="date">
+        </div>
+      </div>
+      <div class="coeff-box" id="giorniInfo">Senza date il prezzo mostrato è quello base (noleggio fino a 3 giorni).</div>
+
+      <div class="row">
+        <div>
+          <label id="lbl_fascia1">Fascia oraria di consegna</label>
+          <select id="fascia_consegna">
+            <option value="Giornata intera 9:00–18:00">Giornata intera 9:00–18:00</option>
+            <option value="Mattino 9:00–13:00">Mattino 9:00–13:00</option>
+            <option value="Pomeriggio 14:00–18:00">Pomeriggio 14:00–18:00</option>
+            <option value="Straordinaria 6:00–9:00">Straordinaria 6:00–9:00</option>
+            <option value="Straordinaria 18:00–22:00">Straordinaria 18:00–22:00</option>
+            <option value="Notturno 22:00–24:00">Notturno 22:00–24:00</option>
+            <option value="Notturno 00:00–6:00">Notturno 00:00–6:00</option>
+            <option value="__custom__">Orario preciso (scrivi sotto)…</option>
+          </select>
+          <input id="fascia_consegna_txt" class="hide" style="margin-top:8px" placeholder="Es. consegna entro le 10:30">
+        </div>
+        <div>
+          <label id="lbl_fascia2">Fascia oraria di ritiro</label>
+          <select id="fascia_ritiro">
+            <option value="Giornata intera 9:00–18:00">Giornata intera 9:00–18:00</option>
+            <option value="Mattino 9:00–13:00">Mattino 9:00–13:00</option>
+            <option value="Pomeriggio 14:00–18:00">Pomeriggio 14:00–18:00</option>
+            <option value="Straordinaria 6:00–9:00">Straordinaria 6:00–9:00</option>
+            <option value="Straordinaria 18:00–22:00">Straordinaria 18:00–22:00</option>
+            <option value="Notturno 22:00–24:00">Notturno 22:00–24:00</option>
+            <option value="Notturno 00:00–6:00">Notturno 00:00–6:00</option>
+            <option value="__custom__">Orario preciso (scrivi sotto)…</option>
+          </select>
+          <input id="fascia_ritiro_txt" class="hide" style="margin-top:8px" placeholder="Es. ritiro alle 19:00 in punto">
+        </div>
+      </div>
+
+      <label style="margin-top:18px">Modalità</label>
+      <div class="seg" id="segMod">
+        <button type="button" data-m="consegna" class="on">Consegna a domicilio</button>
+        <button type="button" data-m="ritiro">Ritiro in magazzino</button>
+        <button type="button" data-m="dacalcolare">Da calcolare</button>
+      </div>
+
+      <!-- RITIRO -->
+      <div id="boxRitiro" class="hide" style="margin-top:14px">
+        <label>Magazzino per ritiro e riconsegna</label>
+        <div class="warehouses">
+          <div class="wh on" data-w="Milano Opera – Via Fornace Cavallino, snc"><b>Milano Opera</b><small>Via Fornace Cavallino, snc</small></div>
+          <div class="wh" data-w="Vicenza Brendola – Via Orna 9/F"><b>Vicenza Brendola</b><small>Via Orna 9/F</small></div>
+        </div>
+      </div>
+
+      <!-- DA CALCOLARE -->
+      <div id="boxDacalcolare" class="hide" style="margin-top:14px">
+        <label>Dicitura del costo trasporto da riportare in preventivo</label>
+        <label class="chk"><input type="radio" name="dacalc_opt" value="COSTO DA QUANTIFICARE IN BASE A TIPOLOGIA E QUANTITA' DEL MATERIALE NOLEGGIATO" checked> Costo da quantificare in base a tipologia e quantità del materiale noleggiato</label>
+        <label class="chk"><input type="radio" name="dacalc_opt" value="COSTO DA QUANTIFICARE IN BASE A LOCALITA', DATE E ORARI DI CONSEGNA E RITIRO"> Costo da quantificare in base a località, date e orari di consegna e ritiro</label>
+        <label class="chk"><input type="radio" name="dacalc_opt" value="COSTO DA QUANTIFICARE IN BASE A TIPOLOGIA E QUANTITA' DEL MATERIALE NOLEGGIATO, LOCALITA', DATE E ORARI DI CONSEGNA E RITIRO"> Costo da quantificare in base a tipologia e quantità del materiale noleggiato, località, date e orari di consegna e ritiro</label>
+      </div>
+
+      <!-- CONSEGNA + CALCOLATORE TRASPORTI -->
+      <div id="boxConsegna">
+        <div id="tcalc">
+          <div id="maps-status-bar" class="status-bar inactive"><span class="status-dot"></span><span id="maps-status-text">Google Maps in caricamento…</span></div>
+
+          <div class="tcard">
+            <div class="section-title"><span class="tnum">A</span> Percorso</div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="field-label">Magazzino di partenza</label>
+                <select id="departure">
+                  <option value="Via Fornace Cavallino snc, 20073 Opera MI, Italia">Opera (MI)</option>
+                  <option value="Via Orna 9/F, 36040 Brendola VI, Italia">Brendola (VI)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="field-label">Indirizzo di consegna (opzionale)</label>
+                <input type="text" id="destination" placeholder="Es: Via Montenapoleone 10, Milano…">
+              </div>
+            </div>
+            <div id="stops-container"></div>
+            <button class="btn-add-stop" type="button" onclick="addStop()">+ Aggiungi tappa intermedia</button>
+            <div class="flex-end mt-16">
+              <div style="flex:1">
+                <label class="field-label">KM (sola andata)</label>
+                <input type="number" id="km-input" placeholder="Es: 175" min="0" oninput="onKmChange()">
+              </div>
+              <div style="flex:1"><div class="km-ar-box"><div class="km-ar-value" id="km-ar-display">—</div><div class="km-ar-label">km andata e ritorno</div></div></div>
+              <button id="btn-calc-route" class="btn-maps" type="button" onclick="calculateRoute()">📍 Calcola con Maps</button>
+            </div>
+            <p class="hint" style="margin-top:10px">⚠️ I km si intendono per la <strong>sola andata</strong>; il sistema calcola automaticamente andata e ritorno.</p>
+          </div>
+
+          <div class="tcard">
+            <div class="section-title" style="margin-bottom:12px"><span class="tnum" style="background:#e67e22">★</span> Fornitore intermedio <span style="font-size:11px;font-weight:normal;color:var(--muto);margin-left:4px">(opzionale)</span></div>
+            <div class="toggle-item" onclick="toggleFornitore()" id="ti-fornitore" style="margin-bottom:0">
+              <div><div class="t-label">📦 Aggiungere un fornitore intermedio?</div><div class="t-sub">Ritiro + reso = 2 viaggi A/R (4 × km × €0,20/km)</div></div>
+              <div class="toggle-sw" id="ts-fornitore"></div>
+            </div>
+            <div id="fornitore-fields" style="display:none;margin-top:18px;padding-top:18px;border-top:1px solid var(--grigio)">
+              <div class="grid-2" style="margin-bottom:14px">
+                <div class="form-group" style="margin-bottom:0">
+                  <label class="field-label">Fornitore</label>
+                  <select id="fornitore-select" onchange="onFornitoreSelectChange()">
+                    <option value="">— Seleziona fornitore —</option>
+                    <option value="Via Montello 20, 20021 Baranzate MI, Italia">Smacrent — Baranzate (MI)</option>
+                    <option value="Via Giuseppe di Vittorio 3, 20068 Bettola-Zeroformagno MI, Italia">Lavanderia Stellare — Bettola (MI)</option>
+                    <option value="Via Giuseppe di Vittorio 34, 25030 Castel Mella BS, Italia">Barbera Noleggio — Castel Mella (BS)</option>
+                    <option value="Via dell'Impresa 48, 36040 Brendola VI, Italia">Iwird srl — Brendola (VI)</option>
+                    <option value="Viale dell'artigianato 42, 36023 Longare VI, Italia">Ambienti Noleggio — Longare (VI)</option>
+                    <option value="Via Lambro 28/C, 20073 Opera MI, Italia">Nolo Vetrine Milano — Opera (MI)</option>
+                    <option value="Via Fabio Filzi 62, 20020 Magnago MI, Italia">Luxuri Noleggio — Magnago (MI)</option>
+                    <option value="__altro__">✏️ Altro indirizzo…</option>
+                  </select>
+                </div>
+                <div class="form-group" id="fornitore-custom-row" style="display:none;margin-bottom:0">
+                  <label class="field-label">Indirizzo fornitore</label>
+                  <input type="text" id="fornitore-custom" placeholder="Es: Via Roma 1, Bergamo…">
+                </div>
+              </div>
+              <div class="flex-end">
+                <div style="flex:1"><label class="field-label">KM magazzino → fornitore (sola andata)</label><input type="number" id="km-fornitore" placeholder="Es: 18" min="0" oninput="onKmFornitoreChange()"></div>
+                <div style="flex:1"><div class="km-ar-box"><div class="km-ar-value" id="km-fornitore-total-display">—</div><div class="km-ar-label">km totali fornitore (4×)</div></div></div>
+                <button id="btn-calc-fornitore" class="btn-maps" type="button" onclick="calculateFornitoreRoute()" style="display:none">📍 Calcola con Maps</button>
+              </div>
+              <p class="hint" style="margin-top:10px">📌 Formula: 2 viaggi A/R = <strong>4 × km</strong> × €0,20/km</p>
+            </div>
+          </div>
+
+          <div class="tcard">
+            <div class="section-title"><span class="tnum">B</span> Veicolo e carico</div>
+            <label class="field-label">Seleziona il furgone</label>
+            <div class="vehicle-grid">
+              <div class="vehicle-card" onclick="selectVehicle('Doblò')" id="v-Doblò"><div class="v-icon">🚐</div><div class="v-name">Fiat Doblò</div><div class="v-specs">Max 500 kg<br>3 m³</div><div class="v-cost">Costo fisso €5,00</div></div>
+              <div class="vehicle-card" onclick="selectVehicle('Jumper')" id="v-Jumper"><div class="v-icon">🚚</div><div class="v-name">JUMPER / BOXER</div><div class="v-specs">Max 1.000 kg<br>8 m³</div><div class="v-cost">Costo fisso €10,00</div></div>
+              <div class="vehicle-card" onclick="selectVehicle('Cassonato')" id="v-Cassonato"><div class="v-icon">🚛</div><div class="v-name">Cassonato</div><div class="v-specs">Max 1.500 kg<br>20 m³</div><div class="v-cost">Costo fisso €20,00</div></div>
+            </div>
+            <div class="mt-16">
+              <label class="field-label">Percentuale di carico</label>
+              <div class="load-grid">
+                <div class="load-option" onclick="selectLoad(50)" id="l-50"><div class="load-pct">50%</div><div class="load-desc">Carico parziale</div><div class="load-detail" id="l-50-detail">—</div></div>
+                <div class="load-option" onclick="selectLoad(100)" id="l-100"><div class="load-pct">100%</div><div class="load-desc">Carico pieno</div><div class="load-detail" style="color:#e67e22">+30% sul trasporto base</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tcard">
+            <div class="section-title"><span class="tnum">C</span> Programmazione viaggio</div>
+            <div class="grid-3">
+              <div class="form-group"><label class="field-label">Tipo di giorno</label><select id="day-type"><option value="Feriale">Feriale (+€0)</option><option value="Sabato">Sabato (+€50)</option><option value="Festivo">Festivo (+€90)</option></select></div>
+              <div class="form-group"><label class="field-label">Fascia oraria</label><select id="time-slot"><option value="ORD">Ordinario 09–18 (+€0)</option><option value="EXORD">Straord. 06–09/18–22 (+€60)</option><option value="NOT1">Notturno 22–24 (+€90)</option><option value="NOT2">Notturno 00–06 (+€150)</option></select></div>
+              <div class="form-group"><label class="field-label">Ampiezza fascia</label><select id="duration"><option value="0">Giornata intera (+0%)</option><option value="0.1">3–4 ore (+10%)</option><option value="0.25">1–2 ore (+25%)</option></select></div>
+            </div>
+          </div>
+
+          <div class="tcard">
+            <div class="section-title"><span class="tnum">D</span> Supplementi e condizioni</div>
+            <div class="toggle-grid">
+              <div class="toggle-item" onclick="toggleOpt('alta-stagione')" id="ti-alta-stagione"><div><div class="t-label">🌞 Alta stagione</div><div class="t-sub">Apr–Giu / Set–Dic · +10%</div></div><div class="toggle-sw" id="ts-alta-stagione"></div></div>
+              <div class="toggle-item" onclick="toggleOpt('centro-storico')" id="ti-centro-storico"><div><div class="t-label">🏛️ Centro storico</div><div class="t-sub">+€50,00</div></div><div class="toggle-sw" id="ts-centro-storico"></div></div>
+              <div class="toggle-item" onclick="toggleOpt('ztl')" id="ti-ztl"><div><div class="t-label">🚫 ZTL Quadrilatero Moda</div><div class="t-sub">Milano 10–11 · +€75,00</div></div><div class="toggle-sw" id="ts-ztl"></div></div>
+              <div class="toggle-item" onclick="toggleOpt('piano')" id="ti-piano"><div><div class="t-label">🏢 Consegna al piano (ascensore)</div><div class="t-sub">+30% sulla base</div></div><div class="toggle-sw" id="ts-piano"></div></div>
+            </div>
+            <div class="mt-16">
+              <label class="field-label">Persone extra (oltre all'autista)</label>
+              <div class="people-grid">
+                <button class="people-btn selected" type="button" onclick="selectPeople(0)" id="p-0">0<span class="people-sub">nessuna</span></button>
+                <button class="people-btn" type="button" onclick="selectPeople(1)" id="p-1">1<span class="people-sub">+€40,00</span></button>
+                <button class="people-btn" type="button" onclick="selectPeople(2)" id="p-2">2<span class="people-sub">+€60,00</span></button>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-calculate" type="button" onclick="calculatePrice()">💰 CALCOLA PREZZO TRASPORTO</button>
+
+          <div id="results-section">
+            <div class="results-card">
+              <div class="results-head"><h4>📊 Riepilogo costo trasporto</h4><p id="res-subtitle">—</p></div>
+              <div class="results-body">
+                <table class="breakdown-table" id="breakdown-table"></table>
+                <div class="price-hero"><div class="ph-label">Prezzo pieno (IVA esclusa)</div><div class="ph-amount" id="ph-amount">€ 0,00</div><div class="ph-note">Verificare con responsabile l'eventuale sconto applicabile</div></div>
+                <div class="disc-title">Prezzi con sconto — riferimento operativo</div>
+                <div class="discounts-grid">
+                  <div class="disc-card"><div class="disc-badge">−50%</div><div class="disc-price" id="d-50">€ —</div><div class="disc-desc">Destinazione su tragitto già in essere</div></div>
+                  <div class="disc-card"><div class="disc-badge">−30%</div><div class="disc-price" id="d-30">€ —</div><div class="disc-desc">Distanze &gt;100 km con materiale &gt;€250</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. CONDIZIONI -->
+    <div class="card">
+      <h2><span class="num">3</span> Condizioni da riportare in preventivo</h2>
+      <div class="hint" style="margin-bottom:8px">Le voci selezionate compariranno nel PDF sotto al totale.</div>
+      <div id="condizioni">
+        <label class="chk"><input type="checkbox" value="Piano Terra"> Piano Terra</label>
+        <label class="chk"><input type="checkbox" value="Fronte Camion"> Fronte Camion</label>
+        <label class="chk"><input type="checkbox" value="Posizionamento ESCLUSO"> Posizionamento ESCLUSO</label>
+        <label class="chk"><input type="checkbox" value="Posizionamento INCLUSO"> Posizionamento INCLUSO</label>
+        <label class="chk"><input type="checkbox" value="Trasporto a Piano Alto Senza Ascensore"> Trasporto a Piano Alto Senza Ascensore</label>
+        <label class="chk"><input type="checkbox" value="Trasporto con percorso a piedi"> Trasporto con percorso a piedi</label>
+      </div>
+    </div>
+
+    <!-- 4. INTESTATARIO E NOTE -->
+    <div class="card">
+      <h2><span class="num">4</span> Intestatario, mittente e note</h2>
+      <div class="row">
+        <div>
+          <label>Preventivo intestato a</label>
+          <input id="intestato" placeholder="Nome / ragione sociale">
+        </div>
+        <div>
+          <label>Inviato da</label>
+          <select id="inviato_da">
+            <option value="noleggio1@topeventistore.com">noleggio1@topeventistore.com</option>
+            <option value="noleggio2@topeventistore.com">noleggio2@topeventistore.com</option>
+            <option value="noleggio3@topeventistore.com">noleggio3@topeventistore.com</option>
+            <option value="noleggio4@topeventistore.com">noleggio4@topeventistore.com</option>
+          </select>
+        </div>
+      </div>
+      <div class="hint">Intestatario e mittente compariranno nel PDF.</div>
+      <label style="margin-top:14px">Note</label>
+      <textarea id="note" placeholder="Richieste particolari, tipo di evento, ecc."></textarea>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="side">
+    <div class="card">
+      <h3>Riepilogo</h3>
+      <div class="line"><span>Giorni di noleggio</span><b id="r_giorni">—</b></div>
+      <div class="line"><span>Articoli</span><b id="r_articoli">0</b></div>
+      <label style="margin-top:6px">Imponibile noleggio (€) — modificabile</label>
+      <input id="imp_manual" type="number" min="0" step="0.01">
+      <div class="hint">Calcolato in automatico, modificabile a mano prima di generare il PDF.</div>
+      <div class="line" style="margin-top:10px"><span>IVA 22%</span><b id="r_iva">€ 0,00</b></div>
+      <div class="tot"><span>Tot. noleggio</span><span id="r_tot">€ 0,00</span></div>
+      <div class="coeff-box">Totale riferito al solo <b>noleggio</b> (IVA inclusa). Il trasporto va inserito a parte qui sotto.</div>
+      <div id="traspWrap">
+        <label style="margin-top:4px">Costo trasporto in preventivo (€)</label>
+        <input id="trasp_manual" type="number" min="0" step="0.01" placeholder="Inserisci o modifica">
+        <div class="hint" id="traspHint">Calcola il trasporto qui a sinistra: il valore verrà proposto qui e resta modificabile a mano.</div>
+      </div>
+      <button class="btn btn-pdf" id="btnPdf">📄 Genera preventivo PDF</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer>
+  Top Eventi Noleggio · Milano Opera (Via Fornace Cavallino, snc) · Vicenza Brendola (Via Orna 9/F) · Strumento interno
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script>
+/* ====== CONFIG ====== */
+const EMAIL_UFFICIO="noleggio1@topeventistore.com";
+const IVA=0.22;
+const PRODOTTI=[{"n": "Air Hockey", "u": "https://topeventinoleggio.com/products/tavolo-air-hockey", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/AirHockey_01.png?v=1745829896", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 150.0}]}, {"n": "Arco + 3 frecce", "u": "https://topeventinoleggio.com/products/arco-3-frecce", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Arco.jpg?v=1735919920", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 30.0}]}, {"n": "Arco Gonfiabile 6 x 3,5 mt", "u": "https://topeventinoleggio.com/products/arco-gonfiabile-6-x-3-5-mt", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Arcogonfiabile.jpg?v=1735920399", "c": "Allestimento e segnaletica", "o": "PERSONALIZZAZIONE", "v": [{"l": "Banner FRONTALE per Arco Personalizzato", "p": 80.0}, {"l": "Personalizzazione COMPLETA per Arco ( 3 Banner)", "p": 150.0}, {"l": "Arco Gonfiabile 6 x 3,5 mt", "p": 100.0}]}, {"n": "Asse da stiro", "u": "https://topeventinoleggio.com/products/asse-da-stiro", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Assedastiro.jpg?v=1724408383", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Backdrop in tessuto", "u": "https://topeventinoleggio.com/products/backdrop-in-tessuto", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Backdropintessuto.jpg?v=1735900640", "c": "Illuminazione", "o": "DIMENSIONE", "v": [{"l": "200x230", "p": 300.0}, {"l": "250x230", "p": 350.0}, {"l": "300x230", "p": 380.0}]}, {"n": "Banner Roll-Up 85x200", "u": "https://topeventinoleggio.com/products/banner-roll-up-85x200", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Roll-up85x200_01.jpg?v=1735900578", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Bersaglio PRO + 3 Freccette", "u": "https://topeventinoleggio.com/products/bersaglio-pro-3-freccette", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/BersaglioDartPro_01.jpg?v=1759492736", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 35.0}]}, {"n": "Bidone bianco 42lt", "u": "https://topeventinoleggio.com/products/bidone-bianco-42lt", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Cestinobiancoconcoperchio42lt_02.jpg?v=1755091187", "c": "Clima e riscaldamento", "o": "", "v": [{"l": "", "p": 6.0}]}, {"n": "Bidone grigio con pedale 50lt", "u": "https://topeventinoleggio.com/products/bidone-grigio-con-pedale-50lt", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Bidonegrigioscuro50ltconpedale_02.jpg?v=1755091169", "c": "Altro", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Bidone nero 100 lt", "u": "https://topeventinoleggio.com/products/bidone-nero-100-lt", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Bidonenero100lt.jpg?v=1724406592", "c": "Altro", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Bilanciere + Pesi fino a 100 kg", "u": "https://topeventinoleggio.com/products/bilanciere-pesi-fino-a-100-kg", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Bilanciere.jpg?v=1735913037", "c": "Giochi e intrattenimento", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Biliardo", "u": "https://topeventinoleggio.com/products/noleggio-tavolo-biliardo-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/white-Photoroom_5.jpg?v=1754553651", "c": "Altro", "o": "", "v": [{"l": "", "p": 150.0}]}, {"n": "Blocchetto 100 Contromarche per Guardaroba", "u": "https://topeventinoleggio.com/products/blocchetto-100-contromarche-per-guardaroba", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Blocchetto100numeriGuardaroba.jpg?v=1735901242", "c": "Arredo e decoro", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "BLOCCO FOGLI per lavagna", "u": "https://topeventinoleggio.com/products/blocco-fogli-per-lavagna", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/BloccoFogliperFlipchart.jpg?v=1761205452", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Boccione acqua 12 lt", "u": "https://topeventinoleggio.com/products/noleggio-boccione-l15-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Boccione.jpg?v=1577703269", "c": "Altro", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Bombola gas 10 kg", "u": "https://topeventinoleggio.com/products/noleggio-bombola-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Bombola.jpg?v=1577703775", "c": "Altro", "o": "Misura", "v": [{"l": "10 kg", "p": 50.0}]}, {"n": "Bowl Plexiglass 6 bottiglie", "u": "https://topeventinoleggio.com/products/noleggio-coppone-bottiglie-milnao-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Bowlplexiglass6bottiglie.jpg?v=1706193366", "c": "Altro", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Busto donna sartoriale", "u": "https://topeventinoleggio.com/products/busto-donna-sartoriale", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Manichinosartorialebustodonna.png?v=1724408429", "c": "Tessuti", "o": "", "v": [{"l": "", "p": 30.0}]}, {"n": "Calcio Balilla 2vs2", "u": "https://topeventinoleggio.com/products/calcio-balilla-2vs2", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/white-Photoroom_9.jpg?v=1761743853", "c": "Tavoli", "o": "Color", "v": [{"l": "grigio", "p": 70.0}, {"l": "blu", "p": 70.0}]}, {"n": "Canalina passacavi 5 vie 90 cm", "u": "https://topeventinoleggio.com/products/canalina-passacavi-5-vie-90-cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Canalinapassacavi100x50.jpg?v=1735921523", "c": "Sicurezza e tecnica", "o": "", "v": [{"l": "", "p": 12.0}]}, {"n": "Candelabro Argento", "u": "https://topeventinoleggio.com/products/noleggio-candelabro-argento-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Candelabro.jpg?v=1577711803", "c": "Altro", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Canestro Basket autoportante", "u": "https://topeventinoleggio.com/products/noleggio-canestro-basket-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/canestro.jpg?v=1577712857", "c": "Altro", "o": "", "v": [{"l": "", "p": 80.0}]}, {"n": "Cantinetta Vino 15 bottiglie", "u": "https://topeventinoleggio.com/products/noleggio-cantina-vino-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Cantina_vino.jpg?v=1577713703", "c": "Altro", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Carrellino nero", "u": "https://topeventinoleggio.com/products/carrellino-nero", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Carrellonero51x30x83h.jpg?v=1724408223", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Cartello di Divieto di Sosta", "u": "https://topeventinoleggio.com/products/cartello-di-divieto-di-sosta", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/CartelloDivietodiSosta_01_png.png?v=1735921624", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Cassetta Pronto Soccorso", "u": "https://topeventinoleggio.com/products/cassetta-pronto-soccorso", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/CassettaProntoSoccorso.jpg?v=1735892748", "c": "Sicurezza e tecnica", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Catena 12m 30 lampadine 5cm", "u": "https://topeventinoleggio.com/products/catena-12m-30-lampadine-5cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Catena12m-30Lampadine50mm.jpg?v=1724407375", "c": "Illuminazione", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Catena 5m con 10 lampadine 8cm", "u": "https://topeventinoleggio.com/products/catena-5m-con-10-lampadine-8cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Catena_5m_-_10_Lampadine_80mm.jpg?v=1724407326", "c": "Illuminazione", "o": "", "v": [{"l": "", "p": 8.0}]}, {"n": "Cesta porta palloni", "u": "https://topeventinoleggio.com/products/noleggio-cesta-porta-palloni-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Cesta_porta_palloni.jpg?v=1577715851", "c": "Altro", "o": "", "v": [{"l": "", "p": 20.0}]}, {"n": "Cestino Gettacarte Nero o Bianco", "u": "https://topeventinoleggio.com/products/noleggio-cestino-gettacarte-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Cestino_gettacarte_Nero_01.jpg?v=1723457345", "c": "Altro", "o": "", "v": [{"l": "", "p": 1.0}]}, {"n": "Cinesini calcio-basket", "u": "https://topeventinoleggio.com/products/noleggio-cinesini-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Cinesini.jpg?v=1577876828", "c": "Altro", "o": "", "v": [{"l": "", "p": 1.0}]}, {"n": "Coffe table Bianco o Nero 55x55cm", "u": "https://topeventinoleggio.com/products/coffe-table-bianco-o-nero-55x55cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/CoffeeTablenero55x55.jpg?v=1724405849", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Coffe Table STILE Bianco o Nero", "u": "https://topeventinoleggio.com/products/coffe-table-ferro-nero-o-bianco-60x60-h-45cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/CoffeeTableSTILEBianco60x60_02.jpg?v=1770031198", "c": "Tavoli", "o": "Color", "v": [{"l": "bianco", "p": 12.0}, {"l": "nero", "p": 12.0}]}, {"n": "Colonnina porta dispenser", "u": "https://topeventinoleggio.com/products/colonnina-porta-dispenser", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Portadispensergelmani.jpg?v=1735893121", "c": "Altro", "o": "", "v": [{"l": "", "p": 25.0}]}, {"n": "Colonnina Tendinastro NERA", "u": "https://topeventinoleggio.com/products/noleggio-tendiflex-nero-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/TendinastroNERO_01.jpg?v=1762956718", "c": "Altro", "o": "Colore del Nastro", "v": [{"l": "Nero", "p": 10.0}, {"l": "Rosso", "p": 10.0}, {"l": "Blu", "p": 10.0}, {"l": "Verde", "p": 10.0}, {"l": "Giallo", "p": 10.0}, {"l": "Arancione", "p": 10.0}, {"l": "Bianco", "p": 10.0}, {"l": "Giallo/Nero", "p": 10.0}, {"l": "Bianco/Rosso", "p": 10.0}]}, {"n": "Consolle CDJ 2000 + Mixer", "u": "https://topeventinoleggio.com/products/noleggio-consolle-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/06d87518-3f8d-44c2-8a82-f5bc1671b4d9.jpg?v=1584549597", "c": "Audio e DJ", "o": "", "v": [{"l": "", "p": 300.0}]}, {"n": "Consolle Pioneer CDJ 350 + Mixer", "u": "https://topeventinoleggio.com/products/noleggio-consolle-roma-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/f71820d6-b673-4a98-9e95-b566114d4dc9.jpg?v=1584551370", "c": "Audio e DJ", "o": "", "v": [{"l": "", "p": 180.0}]}, {"n": "Cordone intrecciato 2M", "u": "https://topeventinoleggio.com/products/noleggio-cordone-blu-nero-rosso-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/964f031da6ad429f40872d13d469fe8a_800x_80c337f8-f8d6-4291-97c4-c63ef57bcc33.jpg?v=1585739381", "c": "Altro", "o": "Colore", "v": [{"l": "Nero Gancio Gold", "p": 5.0}, {"l": "Rosso Gancio Gold", "p": 5.0}, {"l": "Blu Gancio Gold", "p": 5.0}, {"l": "Nero Gancio Silver", "p": 5.0}, {"l": "Rosso Gancio Silver", "p": 5.0}, {"l": "Blu Gancio Silver", "p": 5.0}]}, {"n": "Cornice a scatto alluminio  A4 o A3 Verticale h. 150 cm", "u": "https://topeventinoleggio.com/products/cornice-a-scatto-alluminio-a4-o-a3-verticale-h-150-cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PortaavvisiautoportantedaterraconcorniceascattoA3verticaleh-PhotoRoom.png?v=1724403434", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Cyclette professionale", "u": "https://topeventinoleggio.com/products/noleggio-cyclette-easy-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Cyclette-PhotoRoom.png?v=1706193591", "c": "Altro", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Desk NERO", "u": "https://topeventinoleggio.com/products/desk-nero", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/DeskNERO_01-Photoroom.jpg?v=1747141627", "c": "Arredo e decoro", "o": "", "v": [{"l": "", "p": 80.0}]}, {"n": "Erogatore Acqua", "u": "https://topeventinoleggio.com/products/noleggio-dispenser-acqua-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Erogatore_Acqua_per_boccioni_Mod._5_01_4.jpg?v=1739542076", "c": "Altro", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Estintore a CO2 5 kg", "u": "https://topeventinoleggio.com/products/estintore-a-co2-5-kg", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/EstintoreaCO25kg.jpg?v=1735893342", "c": "Sicurezza e tecnica", "o": "", "v": [{"l": "", "p": 30.0}]}, {"n": "Estintore a polvere 6 kg", "u": "https://topeventinoleggio.com/products/estintore-a-polvere-6-kg", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Estintoreapolvere6kg.jpg?v=1735893263", "c": "Sicurezza e tecnica", "o": "", "v": [{"l": "", "p": 20.0}]}, {"n": "Faretto con Treppiede", "u": "https://topeventinoleggio.com/products/noleggio-treppiede-faretto-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/faretto_con_treppiede.jpg?v=1577879392", "c": "Altro", "o": "", "v": [{"l": "", "p": 30.0}]}, {"n": "Faretto LED da terra 100W", "u": "https://topeventinoleggio.com/products/faretto-led-da-terra-100w", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/FarettoLEDmulticolor.jpg?v=1755091113", "c": "Illuminazione", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Faretto Smartbat LED da terra a batteria", "u": "https://topeventinoleggio.com/products/faretto-led-da-terra-a-batteria", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Farettoabatteria_00.jpg?v=1753979630", "c": "Illuminazione", "o": "", "v": [{"l": "", "p": 30.0}]}, {"n": "Fusto da 6 lt Beck’s", "u": "https://topeventinoleggio.com/products/noleggio-fusto-6lt-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Fusto_becks.png?v=1577902740", "c": "Catering e bar", "o": "", "v": [{"l": "", "p": 35.0}]}, {"n": "Gonfiabile Giungla", "u": "https://topeventinoleggio.com/products/gonfiabile-giungla", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/GonfiabileGIUNGLA_1.jpg?v=1754029853", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 150.0}]}, {"n": "Gruccia LEGNO capospalla", "u": "https://topeventinoleggio.com/products/noleggio-gruccia-legno-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/GrucciacapospallaLegno.jpg?v=1706201920", "c": "Altro", "o": "", "v": [{"l": "", "p": 0.4}]}, {"n": "Gruccia legno con PINZE 36 cm", "u": "https://topeventinoleggio.com/products/gruccia-legno-con-pinze-36-cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/GrucciapinzeLegno36cm.jpg?v=1735901154", "c": "Altro", "o": "", "v": [{"l": "", "p": 0.8}]}, {"n": "Gruccia LEGNO NERA capospalla", "u": "https://topeventinoleggio.com/products/gruccia-legno-nera-capospalla", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/GrucciacapospallaLegnoNera.jpg?v=1735901087", "c": "Altro", "o": "", "v": [{"l": "", "p": 0.4}]}, {"n": "Gruppo Elettrogeno 3 KW", "u": "https://topeventinoleggio.com/products/noleggio-elettrogeno-attrezzature-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/gruppo_elettrogeno_3_kw.png?v=1577958096", "c": "Altro", "o": "", "v": [{"l": "", "p": 80.0}]}, {"n": "iPad 10’’", "u": "https://topeventinoleggio.com/products/ipad-10", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/iPad10.png?v=1735893746", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Lavagna 70x100 Magnetica o a Fogli mobili", "u": "https://topeventinoleggio.com/products/noleggio-lavagna-magnetica-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/lavagna_magnetica.jpg?v=1577959963", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 30.0}]}, {"n": "Lavagna bianca bifacciale girevole / con ruote", "u": "https://topeventinoleggio.com/products/lavagna-bianca-bifacciale-girevole-con-ruote", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Lavagna_bifacciale_Girevole_150x90_con_ruote_01.jpg?v=1755090651", "c": "Allestimento e segnaletica", "o": "DIMENSIONE", "v": [{"l": "150x90", "p": 100.0}, {"l": "180x90", "p": 140.0}]}, {"n": "Leggio A3 Orizzontale con ripiani in plexiglass h. 100cm", "u": "https://topeventinoleggio.com/products/leggio-a3-orizzontale-con-ripiani-in-plexiglass-h-100cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Leggioplexiconripiani_01.jpg?v=1724406931", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Leggio con portalibro in Plexiglass formato A3 h. 115 cm", "u": "https://topeventinoleggio.com/products/noleggio-leggio-plexiglass-a3-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Leggioportalibroplexi_01.jpg?v=1706263647", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Leggio METALLO Nero con tasca plexiglass A4 Verticale", "u": "https://topeventinoleggio.com/products/leggio-nero-in-metallo-con-tasca-a4-verticale", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/LeggioNeroinmetallocontascaA4Verticale.jpg?v=1724406886", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 25.0}]}, {"n": "Leggio total plexi A3 Orizzontale h. 120cm", "u": "https://topeventinoleggio.com/products/leggio-total-plexi-a3-orizzontale-h-120cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Leggiototalplexi_01.jpg?v=1724406841", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 30.0}]}, {"n": "Macchina da cucire professionale Singer", "u": "https://topeventinoleggio.com/products/macchina-da-cucire-professionale-singer-1", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/MacchinadacucirePRO_03_7c38d8de-27b3-4f00-8a49-cff1e5fda76d.jpg?v=1735902950", "c": "Altro", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Macchina del Caffè a Capsule", "u": "https://topeventinoleggio.com/products/noleggio-macchina-caffe-capsula-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/macchina_caffe_vari_colori.png?v=1577960982", "c": "Altro", "o": "Set", "v": [{"l": "Solo Macchina", "p": 25.0}, {"l": "Macchina con 100 Capsule Borbone", "p": 65.0}, {"l": "Macchina con 100 Capsule Nespresso", "p": 75.0}, {"l": "Macchina con 200 Capsule Borbone", "p": 105.0}, {"l": "Macchina con 200 Capsule Nespresso", "p": 125.0}]}, {"n": "Manubrio + Pesi fino a 50 kg", "u": "https://topeventinoleggio.com/products/manubrio-pesi-fino-a-50-kg", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Manubrio.webp?v=1735913178", "c": "Giochi e intrattenimento", "o": "", "v": [{"l": "", "p": 20.0}]}, {"n": "New Jersey in plastica 100x70 cm", "u": "https://topeventinoleggio.com/products/new-jersey-in-plastica-100x70-cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/NewJersey.jpg?v=1735921409", "c": "Sicurezza e tecnica", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Noleggio Affettatrice ELETTRICA per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/affettatrice-elettrica", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Affettatrice_02.jpg?v=1735912139", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Noleggio Alzata ad 1 piano Vetro per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-alzata-catering-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Alzatina_vetro.jpg?v=1577655228", "c": "Tavoli", "o": "VARIANTE", "v": [{"l": "Senza coperchio", "p": 6.0}, {"l": "Con coperchio", "p": 8.0}]}, {"n": "Noleggio Alzata Tavolino plexiglass 30x30x30 per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/alzata-tavolino-plexiglass-30x30x30", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/alzatine-in-plexiglass.png?v=1755002226", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Noleggio Asta microfono per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/asta-microfono", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/AstaMirofono.png?v=1735894306", "c": "Audio e DJ", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Noleggio Backdrop con personalizzazione in PVC per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/backdrop-con-personalizzazione-in-pvc", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/BackdropinPVC300x200.jpg?v=1755870967", "c": "Illuminazione", "o": "Dimensione", "v": [{"l": "300x200", "p": 250.0}, {"l": "200x200", "p": 200.0}]}, {"n": "Noleggio Bancone Bar Luminoso Completo 3 Elementi per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-bancone-bar-milano-roma-1", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Angolo_Bar_245abc6e-0dc2-4c30-9d41-7a27d30174f9.png?v=1577656235", "c": "Catering e bar", "o": "", "v": [{"l": "", "p": 210.0}]}, {"n": "Noleggio Bancone Bar Luminoso h. 110 cm mod. LINEARE per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-bancone-bar-luminoso-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Bar_1.10mt.png?v=1577655331", "c": "Catering e bar", "o": "", "v": [{"l": "", "p": 80.0}]}, {"n": "Noleggio Bancone Bar Luminoso h.110 cm mod. ANGOLARE per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-angolo-bar-luminoso-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Angolo_Bar.png?v=1577655193", "c": "Catering e bar", "o": "", "v": [{"l": "", "p": 80.0}]}, {"n": "Noleggio Bancone Bar PLUS 2 Angoli 2 Banconi per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-bancone-bar-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Angolo_Bar_fdf8a78b-e7ce-42b5-9f6f-bd1bd454a7ef.png?v=1577656527", "c": "Catering e bar", "o": "", "v": [{"l": "", "p": 280.0}]}, {"n": "Noleggio Barbecue INOX 4 fuochi a gas per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-barbecue-catering-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Barbecue.jpg?v=1577657195", "c": "Attrezzature cucina", "o": "Tipologia", "v": [{"l": "4 fuochi Weber con Bombola", "p": 120.0}]}, {"n": "Noleggio Barbecue INOX 5 fuochi a gas per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/barbecue-inox-5-fuochi-a-gas", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/BarbecueINOX5fuochigas_01.jpg?v=1745489616", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 150.0}]}, {"n": "Noleggio Bersaglio Gonfiabile h. 180cm per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/bersaglio-gonfiabile-h-180cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/BERSAGLIO_Gonfiabile_01.jpg?v=1754477501", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 90.0}]}, {"n": "Noleggio Bicchiere Birra 50cl TOP per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/calice-birra", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/BicchiereBirraTOP_01.jpg?v=1755090088", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 0.6}]}, {"n": "Noleggio Bicchiere Bodega Medio per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/bicchiere-bodega-medio", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/357_3.jpg?v=1739618990", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 0.4}]}, {"n": "Noleggio Bicchiere Rock Glass per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-rock-glass-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Rockglass.jpg?v=1706191070", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 0.4}]}, {"n": "Noleggio Bicchierino Shot per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-tazzina-caffe-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Caffeino_x_shots.jpg?v=1577705199", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 0.6}]}, {"n": "Noleggio Bollitore elettrico 1 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/bollitore-elettrico-1-lt", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Bollitore.jpg?v=1735904996", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 6.0}]}, {"n": "Noleggio Bollitore elettrico 10 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/bollitore-elettrico-10-lt", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Bollitore_elettrico_10_lt_02.jpg?v=1739539053", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 25.0}]}, {"n": "Noleggio Brocca in vetro 1.7 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/brocca-in-vetro-1-7-lt", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/BroccaVETRO1_7lt_01_2.png?v=1746438875", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 2.5}]}, {"n": "Noleggio Brocca in vetro 2 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-brocca-2lt-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/61d9-ciFfQL._AC_SY450.jpg?v=1706191685", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 4.0}]}, {"n": "Noleggio Brocca in vetro da 1 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-brocca-1lt-roma-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Brocca_VETRO_1_lt_01.jpg?v=1755093968", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 2.0}]}, {"n": "Noleggio Calice Ballon per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/calice-balloon", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/CaliceBalloon_01.jpg?v=1755871306", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 0.8}]}, {"n": "Noleggio Calice Cognac per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-calice-cognac-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/CaliceCognac.png?v=1706191892", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 0.9}]}, {"n": "Noleggio Calice Flute per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-calice-flute-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Flute17cl_01.jpg?v=1739705703", "c": "Tavola e stoviglie", "o": "", "v": [{"l": "", "p": 0.4}]}, {"n": "Noleggio Calice Vino per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-calice-vino-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/CaliciVinoTOP_01.jpg?v=1739618085", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 0.4}]}, {"n": "Noleggio Candele Chafing Dish per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-candele-chafing-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Candele.png?v=1577712507", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 3.0}]}, {"n": "Noleggio Cannone riscaldante per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-cannone-riscaldante-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Cannone.jpg?v=1577713090", "c": "Clima e riscaldamento", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Noleggio Carretto Gelati per Feste ed Eventi", "u": "https://topeventinoleggio.com/products/noleggio-carretto-gelati-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Carretto_TOP_06.jpg?v=1755093609", "c": "Catering e bar", "o": "Tipologia", "v": [{"l": "Solo Carretto gelati", "p": 250.0}, {"l": "Carretto gelati + meteriale di consumo fino a 100pax", "p": 430.0}, {"l": "Carretto gelati + materiale di consumo + operatore", "p": 550.0}]}, {"n": "Noleggio Carretto Granite per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-carretto-granite-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Carretto_TOP_06.jpg?v=1755093609", "c": "Catering e bar", "o": "Varianti", "v": [{"l": "Solo Carretto granite", "p": 350.0}, {"l": "Carretto con occorrente fino a 100 ospiti", "p": 530.0}, {"l": "Carretto con Occorrente e Operatrice", "p": 650.0}]}, {"n": "Noleggio Carretto Popcorn per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-carretto-popcorn-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Carretto_TOP_06.jpg?v=1755093609", "c": "Attrezzature cucina", "o": "Varianti", "v": [{"l": "Solo Noleggio Carretto", "p": 250.0}, {"l": "Carretto con Materiale fino a 100 pax", "p": 370.0}, {"l": "Carretto con Operatore 6 ore diurne e Materiale fino a 100 pax", "p": 490.0}]}, {"n": "Noleggio CARRETTO VINTAGE personalizzabile per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/carretto-vintage-personalizzabile", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/CarrettoTOP_01.jpg?v=1761754520", "c": "Catering e bar", "o": "", "v": [{"l": "", "p": 200.0}]}, {"n": "Noleggio Carretto Zucchero Filato per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-carretto-zucchero-filato-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Carretto_TOP_06.jpg?v=1755093609", "c": "Attrezzature cucina", "o": "Varianti", "v": [{"l": "Solo Carretto zucchero filato", "p": 250.0}, {"l": "Carretto e materiale fino a 100 pax", "p": 330.0}, {"l": "Carretto con Operatrice e Materiale", "p": 450.0}]}, {"n": "Noleggio Cassa Audio per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-coppia-casse-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Casse.png?v=1577789922", "c": "Audio e DJ", "o": "Varianti", "v": [{"l": "Cassa 500W", "p": 70.0}, {"l": "Coppia casse 1000W Con Subwoofer", "p": 300.0}]}, {"n": "Noleggio Chafing Dish con Coperchio per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-chafing-dish-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Chafing_dish.png?v=1577716267", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 25.0}]}, {"n": "Noleggio Chafing Dish ELETTRICO per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/chafing-dish-elettrico", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/chafingdishelettrico.jpg?v=1735911395", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 45.0}]}, {"n": "Noleggio Cioccolatiera per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-cioccolatiera-10lt-roma-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Cioccolatiera_10_lt_01.jpg?v=1761666852", "c": "Attrezzature cucina", "o": "VARIANTI", "v": [{"l": "10 lt", "p": 90.0}, {"l": "5 lt", "p": 60.0}]}, {"n": "Noleggio Coffee table Europa rotondo bianco con gambe effetto legno per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-coffee-table-europa-rotondo-bianco-con-gambe-effetto-legno-per-feste-ed-eventi-a-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/CoffeeTableEUROPA_01.jpg?v=1779447730", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 20.0}]}, {"n": "Noleggio Condizionatore portatile 8000BTU per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/condizionatore-portatile-8000btu", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/CondizionatorePinguino8000BTUb.jpg?v=1755091077", "c": "Clima e riscaldamento", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Noleggio Congelatore a pozzetto 100 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-congelatore-100lt-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Congelatore_100_lt.png?v=1579123524", "c": "Allestimento e segnaletica", "o": "Volume", "v": [{"l": "100 lt.", "p": 45.0}]}, {"n": "Noleggio Congelatore a pozzetto 200 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-congelatore-200lt-roma-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Congelatore_200_lt.png?v=1579123622", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 90.0}]}, {"n": "Noleggio Controller Pioneer per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/controller-pioneer", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/ConsolleDJ.jpg?v=1776078365", "c": "Audio e DJ", "o": "", "v": [{"l": "", "p": 60.0}]}, {"n": "Noleggio Coppa Champagne per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-coppa-martini-retro-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/MH122844_574422450057872-550x550.jpg?v=1736873263", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 1.0}]}, {"n": "Noleggio Coppa Martini per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-coppa-martini-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/CoppaMartini.jpg?v=1706192172", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 0.6}]}, {"n": "Noleggio Coppia Stativi per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-coppia-stativi-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Coppia_stativi.jpg?v=1577875373", "c": "Audio e DJ", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Noleggio Desk PVC con crowner per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/desk-pvc-con-crowner", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/DeskPVCconcrowner_01.jpg?v=1739609180", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 20.0}]}, {"n": "Noleggio Dispenser in Vetro con Rubinetto per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/dispenser-in-vetro-con-rubinetto", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Dispenservetroconrubinetto4lt_01.jpg?v=1755075867", "c": "Catering e bar", "o": "", "v": [{"l": "", "p": 8.0}]}, {"n": "Noleggio Divano 2 posti in ecopelle per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-divanetto-ecopelle-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Divano_bianco_2.jpg?v=1755789897", "c": "Sedute e divani", "o": "Colore", "v": [{"l": "Bianco", "p": 70.0}]}, {"n": "Noleggio Divano ELLE Nero per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/divano-nero", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/divanonero.png?v=1755877730", "c": "Sedute e divani", "o": "Modello", "v": [{"l": "DX", "p": 85.0}, {"l": "SX", "p": 85.0}]}, {"n": "Noleggio Divano Europa bianco con struttura effetto legno feste eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-divano-europa-bianco-con-struttura-effetto-legno-feste-eventi-a-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/DivanoEUROPA_01.jpg?v=1779447528", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 100.0}]}, {"n": "Noleggio Divano LAGO Bianco per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/divano-lago-bianco", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/DivanoLAGOBianco_01_1.jpg?v=1770982267", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 90.0}]}, {"n": "Noleggio Estrattore di succo per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/estrattore-di-succo", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Estrattoredisucco_01.jpg?v=1738334221", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 30.0}]}, {"n": "Noleggio Fontana di Cioccolato per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/fontana-di-cioccolato-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/WhatsAppImage2024-01-25at16.00.37.jpg?v=1761667635", "c": "Attrezzature cucina", "o": "Misura", "v": [{"l": "80 cm", "p": 80.0}, {"l": "40 cm", "p": 50.0}]}, {"n": "Noleggio Forno elettrico 4 teglie per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-forni-4teglie-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/WhatsAppImage2024-01-25at16.35.18.jpg?v=1755094009", "c": "Attrezzature cucina", "o": "Presa", "v": [{"l": "220", "p": 120.0}]}, {"n": "Noleggio Forno elettrico 5 Teglie per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-forno-5teglie-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Forno5teglie.jpg?v=1706197278", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 120.0}]}, {"n": "Noleggio Forno Microonde per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/forno-microonde", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/FornoMicronde.png?v=1735912445", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 35.0}]}, {"n": "Noleggio Friggitrice elettrica per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-friggitrice-elettrica-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Friggitriceelettricadoppiavasca8_8litri.jpg?v=1706197421", "c": "Attrezzature cucina", "o": "Titolo", "v": [{"l": "8 lt", "p": 70.0}, {"l": "8 lt + 8 lt", "p": 120.0}]}, {"n": "Noleggio Friggitrice in Rame con cestello per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-friggitrice-inrame-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Friggitrice_rame.png?v=1577901261", "c": "Attrezzature cucina", "o": "Tipologia", "v": [{"l": "Friggitrice in Rame cestello da 5 litri ideale per i Fritti espressi", "p": 80.0}, {"l": "Noleggio Bombola 10 kg", "p": 50.0}]}, {"n": "Noleggio Frigo a pozzetto 300lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/frigo-a-pozzetto-300lt", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Frigoriferoapozzetto300lt_01.jpg?v=1749138723", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 140.0}]}, {"n": "Noleggio Frigo domestico 100lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/frigo-domestico-100lt", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Frigo100lt-esterno.jpg?v=1724401252", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Noleggio Frigo Domestico 200 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-frigo-200-lt-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/frigo_200_lt.jpg?v=1577957213", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Noleggio Frigo Minibar 40 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/frigo-minibar-40-lt", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Frigominibar40lt.jpg?v=1735912623", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 30.0}]}, {"n": "Noleggio Frigo Vetrina 340 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-frigo-vetrina-340lt-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Frigovetrina340lt.jpg?v=1706199714", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 150.0}]}, {"n": "Noleggio Frigo Vetrina da banco 130 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/frigo-vetrina-da-banco-130-lt", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/FrigovetrinaNeradabanco130lt.jpg?v=1735912887", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Noleggio Fry Top Elettrica 60 cm per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-piastra-elettrica-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/FryTopelettrico60cm.jpg?v=1706199835", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Noleggio Fungo riscaldante Classico a Gas per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-fungo-riscaldante-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/FungoClassicoGas.jpg?v=1705930145", "c": "Clima e riscaldamento", "o": "", "v": [{"l": "", "p": 80.0}]}, {"n": "Noleggio Fungo Riscaldante Elettrico per Feste", "u": "https://topeventinoleggio.com/products/noleggio-fungo-riscaldante-elettrico-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/FungoElettricoriscaldanteainfrarossi_00.jpg?v=1705930241", "c": "Clima e riscaldamento", "o": "", "v": [{"l": "", "p": 60.0}]}, {"n": "Noleggio Fusto birra 20 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-fusti-birra-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/fusto.jpg?v=1577902539", "c": "Catering e bar", "o": "", "v": [{"l": "", "p": 75.0}]}, {"n": "Noleggio Fusto Birra Lager Chiara per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/birra-lager-chiara", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/un-fusto-di-birra-per-spillatore.png?v=1776228663", "c": "Catering e bar", "o": "FUSTO", "v": [{"l": "6 lt", "p": 35.0}, {"l": "30 lt", "p": 110.0}]}, {"n": "Noleggio Fusto Birra Rossa per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/birra-rossa", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/un-fusto-di-birra-per-spillatore.png?v=1776228663", "c": "Catering e bar", "o": "FUSTO", "v": [{"l": "15 lt", "p": 75.0}]}, {"n": "Noleggio Fusto Birra Weiss per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/birra-weiss", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/un-fusto-di-birra-per-spillatore.png?v=1776228663", "c": "Catering e bar", "o": "FUSTO", "v": [{"l": "15 lt", "p": 75.0}]}, {"n": "Noleggio Gazebo Estensibili per Feste ed Eventi", "u": "https://topeventinoleggio.com/products/noleggio-gazebo-estensibili-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/gazebo_2_x_2_topeventistore_finestrato_800x_e960ac45-c8ab-4354-812a-6f13c4e8fcf4.png?v=1585990574", "c": "Esterno e giardino", "o": "Misura", "v": [{"l": "3x3 Bianco con pareti", "p": 100.0}, {"l": "4x4 Bianco con pareti", "p": 120.0}, {"l": "3x4.5 Bianco con pareti", "p": 150.0}, {"l": "3x6 Bianco con pareti", "p": 180.0}, {"l": "3x3 Bianco senza pareti", "p": 70.0}, {"l": "4x4 Bianco senza pareti", "p": 100.0}, {"l": "3x4.5 Bianco senza pareti", "p": 120.0}, {"l": "3x6 Bianco senza pareti", "p": 140.0}, {"l": "3 x 3 Nero senza pareti", "p": 70.0}, {"l": "3 x 3 Nero con pareti", "p": 70.0}, {"l": "4x8 Bianco con pareti", "p": 350.0}, {"l": "4x8 Bianco senza pareti", "p": 300.0}]}, {"n": "Noleggio Gazebo Pagoda professionale certificato per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-gazebo-professionali-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Gazebo_pagoda_2.png?v=1776830929", "c": "Esterno e giardino", "o": "Modello", "v": [{"l": "Pagoda 3x3 Con pareti Laterali", "p": 350.0}, {"l": "Pagoda 4x4 Con Pareti Laterali", "p": 550.0}, {"l": "Pagoda 5x5 Con Pareti Laterali", "p": 750.0}, {"l": "Pagoda 6x6 Con Pareti Laterali", "p": 850.0}]}, {"n": "Noleggio Granitore 2 Vasche 12+12 L Macchina Granite Professionale", "u": "https://topeventinoleggio.com/products/noleggio-granitore-2-vasche-12-12-l-macchina-granite-professionale", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Granitore2vasche12_12lt_02.jpg?v=1779267969", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 150.0}]}, {"n": "Noleggio Granitore/Sorbettiera 6 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-granitore-sorbettiera-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Granitore_sorbettira.jpg?v=1577957294", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 150.0}]}, {"n": "Noleggio Grembiule NERO con pettorina per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/grembiule-nero-con-pettorina", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Grembiuleconpettorina.jpg?v=1755004346", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Noleggio Gruppo Elettrogeno 3 kW", "u": "https://topeventinoleggio.com/products/generatore-di-corrente-3kw", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/generatore-di-corrente-einhell-tc-pg-35-e5-2-6-kw-monofase-a-benzina-4t-carrellato--agrieuro_22019_1.jpg?v=1735920973", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 80.0}]}, {"n": "Noleggio Lampada a Infrarossi da parete Consumo 2 kW per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/lampada-a-infrarossi-da-parete-consumo-2-kw", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Lampadaelettricariscaldanteainfrarossidaparete.jpg?v=1735899954", "c": "Clima e riscaldamento", "o": "", "v": [{"l": "", "p": 40.0}]}, {"n": "Noleggio Lampada LED da tavolo senza filo per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/lampada-led-da-tavolo-senza-filo", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/LampadaNERAdatavolosenzafilo_05.jpg?v=1746546226", "c": "Tavoli", "o": "Color", "v": [{"l": "nero", "p": 15.0}, {"l": "bianco", "p": 15.0}]}, {"n": "Noleggio Lampada Riscaldante ELETTRICA Nera con piantana per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-lampada-riscaldante-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/LampadaElettricariscaldanteconpiantana-PhotoRoom.png?v=1706262297", "c": "Clima e riscaldamento", "o": "", "v": [{"l": "", "p": 40.0}]}, {"n": "Noleggio Lampione 200 cm per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-lampione-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/lampione_200_cm.jpg?v=1577959812", "c": "Illuminazione", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Noleggio Macchina per Sottovuoto professionale per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sottovuoto-professionale-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/sottovuoto.jpg?v=1578159656", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 60.0}]}, {"n": "Noleggio Macchina Popcorn per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/macchina-popcorn", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/preview_3.jpg?v=1735913936", "c": "Attrezzature cucina", "o": "COLORE", "v": [{"l": "NERO", "p": 70.0}]}, {"n": "Noleggio Macchina SPARANEVE per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/macchina-sparaneve", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/MacchinaSPARANEVE_01.jpg?v=1761135061", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Noleggio Macchina Zucchero filato per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/macchina-zucchero-filato", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/MacchinaZuccheroFilato.jpg?v=1735913694", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Noleggio Mangia in piedi Rotondo per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/mangia-in-piedi-rotondo", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Tavolinoh110cmrotondo80cm_01.jpg?v=1755876687", "c": "Tavoli", "o": "Colore del Vestitino lycra", "v": [{"l": "trasparente", "p": 10.0}, {"l": "bianco", "p": 15.0}, {"l": "nero", "p": 15.0}, {"l": "blu", "p": 15.0}, {"l": "rosso", "p": 15.0}, {"l": "arancione", "p": 15.0}, {"l": "azzurro", "p": 15.0}, {"l": "bordeaux", "p": 15.0}, {"l": "rosa", "p": 15.0}, {"l": "verde", "p": 15.0}, {"l": "argento", "p": 15.0}]}, {"n": "Noleggio Megabox 90x90x65h per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-megabox-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Megabox88x88x65h_01-PhotoRoom.png?v=1706264522", "c": "Catering e bar", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Noleggio Microfono con Filo per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-shure-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Microfono.jpg?v=1735894149", "c": "Audio e DJ", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Noleggio Mixer Stereo 4 canali per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/mixer-stereo-4-canali", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Mixerstereo.jpg?v=1735894209", "c": "Audio e DJ", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Noleggio Morsa Prosciutto per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-morsa-prosciutto-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/morsa_prosciutto.png?v=1577898573", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Noleggio Nintendo Switch per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/nintendo-switch", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/nintendo-switch-2019-1624273716.jpg?v=1755002360", "c": "Video e proiezione", "o": "", "v": [{"l": "", "p": 100.0}]}, {"n": "Noleggio Noleggio Set Birreria - Tavolo + 2 Panche per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-set-birreria-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Set_birreria.jpg?v=1578068698", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Noleggio Ombrellone 2x3 Ecru con palo centrale in legno per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/ombrellone-2x3-ecru-con-palo-centrale-in-legno-copia", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Ombrellone3x3palocentralelegno.jpg?v=1706264950", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 60.0}]}, {"n": "Noleggio Ombrellone 3x3 Ecru con braccio laterale in alluminio per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-ombrellone-braccio-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Ombrellone3x3abracciolateralealluminio_01.jpg?v=1706265147", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Noleggio Ombrellone 3x3 Ecru con palo centrale in legno per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/ombrellone-4x4-ecru-con-palo-centrale-in-legno", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Ombrellone3x3ECRUpalocentralelegno_02.png?v=1777282337", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Noleggio Ombrellone 3x3 Nero con braccio laterale in alluminio per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-ombrellone-milano-roma-2", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Ombrellone3x3NERObracciolateralealluminio.jpg?v=1755093693", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Noleggio Ombrellone 3x4 Ecru per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-ombrellone-milano-roma-1", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/3x4_base_cemento.png?v=1577896923", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Noleggio Ombrellone col. Ecru 4 bracci 4x4 (4 da 2x2) per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/ombrellone-col-ecru-4-bracci-4x4-4-da-2x2", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Ombrellone4x4a4bracci2x2.jpg?v=1777283004", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 150.0}]}, {"n": "Noleggio PC Windows per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/pc-windows", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PCWINDOWS.jpg?v=1755003518", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 100.0}]}, {"n": "Noleggio Piastra elettrica Doppia rigata per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-fly-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Fry_top.jpg?v=1577878617", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 100.0}]}, {"n": "Noleggio Piastre a Induzione 3.2 KW per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-piastre-induzione-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PiastraInduzione.jpg?v=1706267441", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Noleggio Piastre a Induzione RGV 2 KW per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-piastre-induzione-milano-roma-1", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/RGV_2_KW.png?v=1578059257", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Noleggio Piedistallo ORO per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/piedistallo-oro", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PiedistalloORO_01.jpg?v=1770981045", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Noleggio Pinze Buffet in acciaio per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-pinze-buffet-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Pinze.jpg?v=1578059925", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 3.0}]}, {"n": "Noleggio Pirofila ceramica 38x26 per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-pirofila-rettangolare-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Pirofila_ceramica_38x26_01.jpg?v=1744125339", "c": "Tavola e stoviglie", "o": "", "v": [{"l": "", "p": 7.0}]}, {"n": "Noleggio Pirofila in ceramica ovale per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-pirofila-ovale-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Pirofilaceramicaovale_01.jpg?v=1706268175", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 7.0}]}, {"n": "Noleggio Plancia 180x80 per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-tavolo-rettangolare-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Plancia180x80_01.jpg?v=1706268346", "c": "Allestimento e segnaletica", "o": "Misura", "v": [{"l": "180 x 80", "p": 10.0}]}, {"n": "Noleggio Podio Premiazioni 220x80 per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/podio-premiazioni-220x80", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Podiopremiazioni_01.jpg?v=1753888347", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 80.0}]}, {"n": "Noleggio Polibox nero 60x40x30h per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-polibox-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/polibox_con_coperchio.jpg?v=1578060437", "c": "Catering e bar", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Noleggio Polibox Porter per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-polibox-milano-roma-1", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/polibox_porter.png?v=1578060660", "c": "Catering e bar", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Noleggio Poltrona Europa bianca con struttura effetto legno Milano", "u": "https://topeventinoleggio.com/products/noleggio-poltrona-europa-bianca-con-struttura-effetto-legno-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PoltronaEUROPA_01.jpg?v=1779447428", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Noleggio Poltrona LAGO Bianca per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-poltrona-ecopelle-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PoltronaLAGOBianca_01.jpg?v=1770981707", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 40.0}]}, {"n": "Noleggio Poltrona STOCCOLMA Nera per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/poltrona-stoccolma-nera", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PoltronaNeraSTOCCOLMA_01.jpg?v=1770982894", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 60.0}]}, {"n": "Noleggio Poltroncina VIMINI per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/poltroncina-vimini", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PoltroncinaVIMINI_01_1.jpg?v=1768921835", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Noleggio Porta Coni plexiglass 6 posti per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/porta-coni-plexiglass-6-posti", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PortaConiplexiglass.jpg?v=1755004907", "c": "Catering e bar", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Noleggio Porta depliant 4 tasche A4 VERTICALE autoportante per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/porta-depliant-4-tasche-a4-verticale-autoportante", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PORTADEPLIANT.webp?v=1755004478", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 25.0}]}, {"n": "Noleggio Porta ombrelli cestino nero per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/porta-ombrelli-o-cestino-nero", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Portaombrellinero_bf84c180-db4a-441d-af92-f6dff885b4e4.jpg?v=1755877102", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 8.0}]}, {"n": "Noleggio Posacenere a Colonnina per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/colonnina-posacenere-nera", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/ColonninaPosacenereNERA_01.jpg?v=1742566636", "c": "Allestimento e segnaletica", "o": "Color", "v": [{"l": "nero", "p": 25.0}, {"l": "silver", "p": 25.0}]}, {"n": "Noleggio Posate BRITISH Acciaio inox per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/set-posate-british", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Posate_Linea_BRITISH_01.jpg?v=1755079093", "c": "Tavoli", "o": "MODELLO", "v": [{"l": "Forchetta da tavola", "p": 0.8}, {"l": "Cucchiaio da tavola", "p": 0.8}, {"l": "Coltello da tavola", "p": 0.8}, {"l": "Forchetta Dessert / Antipasto", "p": 0.8}, {"l": "Cucchiaio Dessert / Antipasto", "p": 0.8}, {"l": "Coltello Dessert / Antipasto", "p": 0.8}, {"l": "Cucchiaino Caffè", "p": 0.8}, {"l": "Cucchiaio Thè", "p": 0.8}]}, {"n": "Noleggio Posate Oro PRESS per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/set-posate-oro", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PosateLineaOroPRESS_01.jpg?v=1755078712", "c": "Tavoli", "o": "MODELLO", "v": [{"l": "Forchetta da tavola", "p": 1.5}, {"l": "Coletello da tavola", "p": 1.5}, {"l": "Cucchiaio da tavola", "p": 1.5}, {"l": "Forchetta Dessert", "p": 1.5}, {"l": "Cucchiaio Dessert", "p": 1.5}, {"l": "Coltello Dessert", "p": 1.5}, {"l": "Cucchiaino Caffè", "p": 1.5}, {"l": "Cucchiaino Thè", "p": 1.5}]}, {"n": "Noleggio Posate SYDNEY Acciaio inox per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/set-posate-sydney-acciaio-inox", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Posate_inox_SYDNEY_01.jpg?v=1755076507", "c": "Tavoli", "o": "MODELLO", "v": [{"l": "Forchetta da tavola", "p": 0.4}, {"l": "Cucchiaio da tavola", "p": 0.4}, {"l": "Coltello da tavola", "p": 0.4}, {"l": "Forchetta Dessert / Antipasto", "p": 0.4}, {"l": "Cucchiaio Dessert / Antipasto", "p": 0.4}, {"l": "Coltello Dessert / Antipasto", "p": 0.4}, {"l": "Cucchiaino caffè", "p": 0.4}]}, {"n": "Noleggio POUF Bianco o Nero 40x40 per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-pouf-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PoufBIANCO40x40h_01.jpg?v=1768921276", "c": "Allestimento e segnaletica", "o": "Color", "v": [{"l": "Bianco", "p": 18.0}, {"l": "Nero", "p": 18.0}]}, {"n": "Noleggio Pouf Bianco o Nero 90x90 per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/pouf-bianco-o-nero-120x120", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Poufnero120x120x45h.jpg?v=1735825462", "c": "Sedute e divani", "o": "Color", "v": [{"l": "nero", "p": 65.0}, {"l": "bianco", "p": 65.0}]}, {"n": "Noleggio Prolunga elettrica 15 mt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/prolunga-elettrica-15-mt", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/20200502095002-prolunga-elettrica-cavo-presa.jpg?v=1755003897", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 25.0}]}, {"n": "Noleggio Sacco Pellet 15 kg per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/sacco-pellet-15-kg", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/un-sacco-che-contiene-pellet.png?v=1776831864", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 18.0}]}, {"n": "Noleggio Salottino in Rattan per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-salotto-rattan-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SalottinoRattan.jpg?v=1706268929", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 90.0}]}, {"n": "Noleggio Salottino in Vimini per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-salottino-vimini-roma-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/VIMINISalottino_01.jpg?v=1744115660", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 65.0}]}, {"n": "Noleggio Scaffale Metallo 9 Armadietti con chiave per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/scaffale-metallo-9-armadietti-con-chiave", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Scaffale9Armadietti_01.jpg?v=1773677955", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 90.0}]}, {"n": "Noleggio Secchiello Acciaio 2 bottiglie per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-secchiello-inox-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/secchiello_inox.jpg?v=1578066139", "c": "Tavola e stoviglie", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Noleggio Secchiello Plexiglass Ghiaccio per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-secchiello-ghiaccio-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SecchielloGhiaccioplexiglass2bottiglie.jpg?v=1706268887", "c": "Tavola e stoviglie", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Noleggio Sedia Chiavarina Bianca con cuscino per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-chiavarina-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Chiavarina_bianca_con_cuscino.jpg?v=1577716881", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 4.5}]}, {"n": "Noleggio Sedia Chiavarina Nera per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/sedia-chiavarina-nera", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/chiavarinanera.jpg?v=1735823904", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 7.0}]}, {"n": "Noleggio Sedia Chiavarina oro per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-chiavarina-oro-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Chiavarina_oro.png?v=1577717178", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 6.5}]}, {"n": "Noleggio Sedia Chiavarina Trasparente per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-chiavarina-trasparente-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Chiavarina_trasparente.jpg?v=1577717518", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 8.0}]}, {"n": "Noleggio Sedia CROSS effetto Legno Noce per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/sedia-cross-legno", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SediaCROSSNoce_01.jpg?v=1771510281", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 8.0}]}, {"n": "Noleggio Sedia Elizabeth Trasparente per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/sedia-alaska-trasparente", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/AlaskaTRASPARENTE_01_jpg.jpg?v=1735824274", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 7.0}]}, {"n": "Noleggio Sedia Igloo Trasparente per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/sedia-igloo-trasparente", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/sediaigloo.jpg?v=1735824154", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 7.0}]}, {"n": "Noleggio Sedia imbottita NERA per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sedia-nera-ribaltina-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/ImbottitaNERA_01.png?v=1761207643", "c": "Sedute e divani", "o": "Variante", "v": [{"l": "Senza Ribaltina", "p": 6.0}]}, {"n": "Noleggio Sedia Kartell La Marie per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sedia-kartell-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/KartellLaMarietrasparente.jpg?v=1706268705", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 6.0}]}, {"n": "Noleggio Sedia LEGNO Giardino per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/sedia-legno-giardino", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SediapieghevoleGIARDINO_01.jpg?v=1755004607", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Noleggio Sedia Monoscocca NERA Agganciabile e Ignifuga per Feste ed Eventi a Milan", "u": "https://topeventinoleggio.com/products/sedia-agganciabile-nera", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SediaNERAagganciabile_01.jpg?v=1746807479", "c": "Sedute e divani", "o": "Variante", "v": [{"l": "Con Ribaltina", "p": 6.0}, {"l": "Senza Ribaltina", "p": 4.0}]}, {"n": "Noleggio Sedia Parigina Decapata per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/sedia-parigina-decapata", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/sediapariginadecapata.jpg?v=1735823661", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 8.0}]}, {"n": "Noleggio Sedia Pieghevole per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/sedia-pieghevole", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SediapieghevoleBianca.jpg?v=1724406088", "c": "Sedute e divani", "o": "Colore", "v": [{"l": "bianco", "p": 2.0}, {"l": "rosso", "p": 2.0}, {"l": "blu", "p": 2.0}, {"l": "nero", "p": 2.0}]}, {"n": "Noleggio Sedia Reale Bianca o Nera per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sedia-reale-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SediaRealebianca_01.jpg?v=1706268535", "c": "Sedute e divani", "o": "COLORE", "v": [{"l": "bianco", "p": 3.5}, {"l": "nero", "p": 3.5}]}, {"n": "Noleggio Sedia regista per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sedia-regista-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/sedia_regista.jpg?v=1578067201", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Noleggio Sedia RITA Bianca Pieghevole con seduta imbottita per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sedia-pieghevole-milano-roma-1", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PieghevoleRITABiancasedutaimbottita_03_2.jpg?v=1770973377", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 3.0}]}, {"n": "Noleggio Sedia Thonet con Cuscino per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sedia-thonet-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Sedia_Thonet_in_metallo_nero.jpg?v=1775794407", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 3.0}]}, {"n": "Noleggio Sedia Thonet Con Vestitino per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sedia-thonet-milano-roma-1", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Sedia_Thonet_con_vestitino_02.jpg?v=1755094199", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 7.0}]}, {"n": "Noleggio Sedia Thonet nera per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-thonet-nera-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SediaThonetneraconsedutachiara.jpg?v=1706268420", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 2.0}]}, {"n": "Noleggio Sedia Ufficio con ruote per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/sedia-ufficio-con-ruote", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/WhatsAppImage2025-01-17at15.24.23.jpg?v=1737123893", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Noleggio Sedia Victoria Trasparente per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-victoria-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Ghost_trasparente.jpg?v=1578136869", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 6.0}]}, {"n": "Noleggio Sedia VIVIANA Pieghevole in legno per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sedia-pieghevole-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SediaVIVIANALegnopieghevole_01.jpg?v=1775672849", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 7.0}]}, {"n": "Noleggio Separè Tessuto 4 ante GRIGIO ANTRACITE Milano", "u": "https://topeventinoleggio.com/products/noleggio-separe-separe-tessuto-4-ante-grigio-antracite-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SepareTessuto4anteGRIGIOANTRACITE_01.jpg?v=1778471862", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 20.0}]}, {"n": "Noleggio Separè Tessuto ECRU componibile Milano", "u": "https://topeventinoleggio.com/products/noleggio-separe-tessuto-ecru-componibile-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SepareTessutoECRUcomponibile_01_1f55b9ba-3730-4403-ac35-7f4bc030f3ae.jpg?v=1778471668", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Noleggio Set Attrezzi Barbecue per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-attrezzi-barbecue-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Set3utensilibarbecue.jpg?v=1706268129", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Noleggio Set Bicchieri ENERGY per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/set-bicchieri-forever", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/81h2_v4Kr-L._AC_SL1500.jpg?v=1736872871", "c": "Tavoli", "o": "MODELLO", "v": [{"l": "Calice Vino Rosso", "p": 1.2}, {"l": "Calice Vino Bianco", "p": 1.2}, {"l": "Flute", "p": 1.2}, {"l": "Tumbler", "p": 1.2}]}, {"n": "Noleggio Set Bicchieri FILO ORO per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-bicchieri-filooro-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Sabina.jpg?v=1736872983", "c": "Tavoli", "o": "MODELLO", "v": [{"l": "Calice Vino Rosso", "p": 1.5}, {"l": "Calice Vino Bianco", "p": 1.5}, {"l": "Tumbler", "p": 1.5}, {"l": "Flute", "p": 1.5}]}, {"n": "Noleggio Set Bicchieri SINFONIA per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/set-bicchieri-sinfonia", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Sinfonia-Set_02.jpg?v=1736779012", "c": "Tavoli", "o": "MODELLO", "v": [{"l": "Calice Vino Rosso", "p": 0.8}, {"l": "Calice Vino Bianco", "p": 0.8}, {"l": "Tumbler Basso", "p": 0.8}, {"l": "Tumbler Alto", "p": 0.8}, {"l": "Flute", "p": 0.8}]}, {"n": "Noleggio Set Bicchieri TOP per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/set-bicchieri-top", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Sky-Calicevino_02.jpg?v=1735904035", "c": "Tavoli", "o": "MODELLO", "v": [{"l": "Tumbler bombato", "p": 0.4}, {"l": "Calice Vino Bianco", "p": 0.4}, {"l": "Calice Vino Rosso", "p": 0.4}, {"l": "Flute", "p": 0.4}]}, {"n": "Noleggio Set Caffè ceramica per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-set-tazzina-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Set_Caffe_FORLi_01_2.jpg?v=1739542354", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 1.0}]}, {"n": "Noleggio Set Piatti ECO per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-piatto-bianco-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Piatto_Piano_ECO_01.jpg?v=1755163698", "c": "Tavola e stoviglie", "o": "Misura", "v": [{"l": "Frutta/Dessert (23 cm)", "p": 0.5}, {"l": "Piano (27 cm)", "p": 0.5}, {"l": "Fondo (21,5 cm / 260 ml)", "p": 0.5}, {"l": "Antipasto (23 cm)", "p": 0.5}]}, {"n": "Noleggio Set piatti MOON per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/set-piatti-moon", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/4349359765.jpg?v=1736873997", "c": "Tavoli", "o": "MODELLO", "v": [{"l": "Piatto piano", "p": 1.0}, {"l": "Pasta bowl", "p": 1.0}, {"l": "Piattino Pane", "p": 1.0}, {"l": "Sottopiatto", "p": 2.8}]}, {"n": "Noleggio Set piatti PRAGA per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/set-piatti-praga", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Immagine2025-01-16103539.png?v=1737020168", "c": "Tavoli", "o": "MODELLO", "v": [{"l": "Piatto piano", "p": 0.9}, {"l": "Piatto fondo", "p": 0.9}, {"l": "Piatto frutta/dessert", "p": 0.9}, {"l": "Piatto antipasto", "p": 0.9}, {"l": "Piattino pane", "p": 0.9}, {"l": "Sottopiatto", "p": 2.8}]}, {"n": "Noleggio Set Piatti QUEEN per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/set-piatti-queen", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/piattiqueen.png?v=1755871584", "c": "Tavoli", "o": "Tipo", "v": [{"l": "Piatto Piano 26cm", "p": 1.5}, {"l": "Piatto Fondo 22.5cm", "p": 1.5}, {"l": "Piatto Antipasto/Dessert 21cm", "p": 1.5}, {"l": "Piattino Pane 16cm", "p": 1.5}, {"l": "Piatto Pasta Bowl 27cm", "p": 3.0}, {"l": "Sottopiatto", "p": 3.8}]}, {"n": "Noleggio Set salottino Europa completo con divano, 2 poltrone, coffee table e tappeto Milano", "u": "https://topeventinoleggio.com/products/noleggio-set-salottino-europa-completo-con-divano-2-poltrone-coffee-table-e-tappeto-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SalottinoEUROPA.jpg?v=1779447990", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 180.0}]}, {"n": "Noleggio Sgabello Bianco ABS per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sgabello-alto-milano-roma-1", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SgabelloabsBianco.jpg?v=1706267992", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Noleggio Sgabello Nero ABS per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sgabello-nero-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Sgabelloabsnero.jpg?v=1706267943", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Noleggio Sgabello REALE per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sgabello-alluminio-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SgabelloRealebianco_01.jpg?v=1706268246", "c": "Sedute e divani", "o": "Colore", "v": [{"l": "BIANCO", "p": 20.0}, {"l": "NERO", "p": 20.0}]}, {"n": "Noleggio Sottopiatto Argento per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sottopiatto-argento-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/image_0a6802cc-f0ed-47a5-b73e-22d47710e849.jpg?v=1567860726", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 3.0}]}, {"n": "Noleggio Sottopiatto Nero per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sottopiatto-nero-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/image_2198b2a3-72c8-461b-8ca8-efb6a9dce34d.jpg?v=1568564239", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 2.0}]}, {"n": "Noleggio Sottopiatto Oro per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sottopiatto-oro-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/sotto_oro.jpg?v=1578160225", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 1.5}]}, {"n": "Noleggio Sottopiatto Rialto 33cm per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/sottopiatto-rialto-avorio", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/RIALTO_BEIGE.png?v=1755167707", "c": "Tavoli", "o": "Colore", "v": [{"l": "beige", "p": 2.5}, {"l": "verde", "p": 2.5}, {"l": "nero", "p": 2.5}]}, {"n": "Noleggio Sottopiatto Silver per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sottopiatto-silver-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/sotto_silver.jpg?v=1578160154", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 1.5}]}, {"n": "Noleggio Sottopiatto Stile Rosso per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sottopiatto-stile-rosso-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/sotto_rosso.png?v=1578160064", "c": "Tavola e stoviglie", "o": "", "v": [{"l": "", "p": 1.5}]}, {"n": "Noleggio Sottopiatto Vimini GIACINTO per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-sottopiatto-vimini-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SottopiattoViminiGIACINTO_01.jpg?v=1768922689", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 2.0}]}, {"n": "Noleggio Specchio con luci trucco da tavolo 60x50cm GRIGIO per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/specchio-trucco-nero-da-tavolo-60x50cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Specchio_Trucco_da_tavolo_60x50cm_Autoportante_02-PhotoRoom_1.png?v=1755090915", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 40.0}]}, {"n": "Noleggio Specchio da tavolo 60x50cm NERO per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/specchio-nero-da-tavolo-60x50cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Specchiodatavolo60x50cmAutoportante_02.jpg?v=1776001780", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 18.0}]}, {"n": "Noleggio Spillatore Birra 2 vie / autorefrigerante per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/spillatore-autorefrigerante", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Spillatore2vieperFusti30ltinterni_09_1_-Photoroom.jpg?v=1741440219", "c": "Tavola e stoviglie", "o": "", "v": [{"l": "", "p": 150.0}]}, {"n": "Noleggio Spillatore Birra da banco per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-spillatore-elettrico-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Spillatoreelettricodabanco-Fusti6lt_03.webp?v=1741440514", "c": "Tavola e stoviglie", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Noleggio Spumantiera Acciaio per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/spumantiera-acciaio", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SpumantieraInox2bottiglie.jpg?v=1735905231", "c": "Tavola e stoviglie", "o": "DIMENSIONE", "v": [{"l": "2 Bottiglie", "p": 8.0}, {"l": "6 Bottiglie", "p": 18.0}]}, {"n": "Noleggio Stufa Piramide a Gas per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-stufa-piramide-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/StufaaPiramideGas_01.jpg?v=1755093664", "c": "Clima e riscaldamento", "o": "", "v": [{"l": "", "p": 100.0}]}, {"n": "Noleggio Stufa Piramide a Pellet per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/stufa-piramide-a-pellet", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/StufaaPiramidePellet_03.jpg?v=1776831980", "c": "Clima e riscaldamento", "o": "", "v": [{"l": "", "p": 100.0}]}, {"n": "Noleggio Supporto a muro per TV 65-85'' per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/supporto-a-muro-per-tv-65-85", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/staffa-a-muro-per-tv-da-23-a-65-supporto-a-parete-inclinabile-con-livella-a-bolla-inclusa-tele-system-wm2365t44a.jpg?v=1755004081", "c": "Video e proiezione", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Noleggio Tapis Roulant Professionale", "u": "https://topeventinoleggio.com/products/noleggio-tapis-roulant-roma-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/tapis_roulant_t520b_domyos_by_decathlon_8529877_1547382.jpg?v=1585735944", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 80.0}]}, {"n": "Noleggio Tappeto Europa 3 x 2 m per salottini lounge per feste ed Eventi Milano", "u": "https://topeventinoleggio.com/products/noleggio-tappeto-europa-3-x-2-m-per-salottini-lounge-per-feste-ed-eventi-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/TappetoEUROPA_01.jpg?v=1779447831", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 35.0}]}, {"n": "Noleggio Tavoli e Sedie per Feste - Set Completo per 30 Ospiti", "u": "https://topeventinoleggio.com/products/noleggio-festa-ospiti-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Ecru_393x_366936a0-226d-4095-bcbf-c63c3198fcc4.png?v=1579774511", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 220.0}]}, {"n": "Noleggio Tavolino LEGNO Giardino 55x55 cm per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/tavolino-legno-giardino-55x55-cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/TavolinodoghelegnoGIARDINO_01.jpg?v=1755004782", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 12.0}]}, {"n": "Noleggio Tavolino Mangia in piedi in ferro per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/tavolino-mangia-in-piedi-in-ferro", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/MangiaimpiediStileTopEventiStore_1.jpg?v=1755075973", "c": "Tavoli", "o": "Colore del piano del tavolo", "v": [{"l": "bianco", "p": 20.0}, {"l": "nero", "p": 20.0}]}, {"n": "Noleggio Tavolino Mangia in piedi rotondo Europa altezza 100 cm", "u": "https://topeventinoleggio.com/products/noleggio-tavolino-mangia-in-piedi-rotondo-europa-altezza-100-cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/MangiainPiediEUROPA_01_7b11a08d-3a19-43ac-bc59-519021dd7bfc.jpg?v=1779447258", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 30.0}]}, {"n": "Noleggio Tavolino VIMINI per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-tavolino-vimini-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/TavolinoVIMINI_01.jpg?v=1768922558", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Noleggio Tavolo 100x60cm bianco o nero per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/tavolo-100x60cm-bianco-o-nero", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Tavolo100x60bianco_00.png?v=1755091354", "c": "Tavoli", "o": "Colore del piano del tavolo", "v": [{"l": "nero", "p": 10.0}, {"l": "bianco", "p": 10.0}]}, {"n": "Noleggio Tavolo Bianco 75x75 cm per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/tavolo-bianco-75x75-cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Tavolobianco75x75_01.jpg?v=1736778110", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Noleggio Tavolo Bistrot h.110 con vestitino per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-tavolo-bistrot-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Bistrot_con_vestito.jpg?v=1577701229", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Noleggio Tavolo Bistrot h.110cm diametro 80cm per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-tavolo-bistrot-milano-roma-1", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Bistrot_07496b6d-ab39-4a9b-8783-9c1f3bb9f9dc.jpg?v=1577702050", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Noleggio Tavolo Bistrot h.70 cm diametro 80 cm per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-bistrot-milano-roma-1", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Bistrot_70cm.jpg?v=1577702464", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Noleggio Tavolo Catering Rotondo per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-tavolo-rotondo-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Tavolorotondo160cm.jpg?v=1706266405", "c": "Tavoli", "o": "Misura", "v": [{"l": "diametro 180 cm / 10-12 posti", "p": 12.0}]}, {"n": "Noleggio Tavolo Country 240x106cm per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/tavolo-country-240x106cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Tavolo_COUNTRY_240x106_01.png?v=1755090754", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 45.0}]}, {"n": "Noleggio Tavolo inox 100x70x85h per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-tavolo-inox-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/tavolo_inox.jpg?v=1578155289", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 40.0}]}, {"n": "Noleggio Teglia 1/1 gastronorm per forno per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/teglia-1-1-gastronorm-per-forno", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/TEGLIA_FORNO.jpg?v=1755079911", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Noleggio Teglia gastronorm per chafing dish per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/teglia-gastronorm-per-chafinh-dish", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/TEGLIA_FORNO.jpg?v=1755079911", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Noleggio Telo per Proiezione per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-telo-proiezione-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Telo_proiezione.png?v=1776232024", "c": "Video e proiezione", "o": "", "v": [{"l": "", "p": 40.0}]}, {"n": "Noleggio Tenda luminosa per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-tenda-luminosa-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Tenda_luminosa.jpg?v=1777283382", "c": "Allestimento e segnaletica", "o": "Misura", "v": [{"l": "1X2", "p": 100.0}, {"l": "1X3", "p": 120.0}, {"l": "2.55X1.10", "p": 50.0}]}, {"n": "Noleggio Tensostrutture per Feste ed Eventi - Maxi Gazebo", "u": "https://topeventinoleggio.com/products/noleggio-tensostrutture-feste-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Maxi_Gazebo_4_x10_03.jpg?v=1755093823", "c": "Esterno e giardino", "o": "Misura", "v": [{"l": "4 x 10", "p": 400.0}, {"l": "6 x 12", "p": 800.0}]}, {"n": "Noleggio TOVAGLIA Misto Lino per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-tovaglia-lino-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/MistoLinoBIANCO.jpg?v=1776228243", "c": "Tavoli", "o": "Colore / Misura", "v": [{"l": "bianco / 100x100 Coprimacchia", "p": 8.0}, {"l": "bianco / 150x150 Coprimacchia", "p": 10.0}, {"l": "bianco / 210x210", "p": 12.0}, {"l": "bianco / 240x240", "p": 14.0}, {"l": "bianco / 330x330", "p": 16.0}, {"l": "bianco / 550x230", "p": 20.0}, {"l": "nero / 330x330", "p": 16.0}, {"l": "nero / 550x230", "p": 20.0}, {"l": "beige / 100x100 Coprimacchia", "p": 8.0}, {"l": "beige / 210x210", "p": 12.0}, {"l": "beige / 240x240", "p": 14.0}, {"l": "beige / 330x330", "p": 16.0}, {"l": "beige / 550x230", "p": 20.0}, {"l": "argento / 330x330", "p": 16.0}, {"l": "argento / 550x230", "p": 20.0}, {"l": "rosso / 330x330", "p": 16.0}, {"l": "rosso / 550x230", "p": 20.0}, {"l": "blu / 330x330", "p": 16.0}, {"l": "blu / 550x230", "p": 20.0}, {"l": "verde / 330x330", "p": 16.0}, {"l": "verde / 550x230", "p": 20.0}]}, {"n": "Noleggio Tovagliolo misto lino 50x50 per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-tovaglioli-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Tovaglioli.jpg?v=1578138882", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 0.9}]}, {"n": "Noleggio Tumbler Basso o Alto per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-tumbler-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/tumbler_alto.jpg?v=1577980994", "c": "Tavoli", "o": "Variante", "v": [{"l": "Basso", "p": 0.6}, {"l": "Alto", "p": 0.6}, {"l": "Mini", "p": 0.6}]}, {"n": "Noleggio Tumbler Bombato per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-tumbler-bombato-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Tumbler_bombato.jpg?v=1755094179", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 0.4}]}, {"n": "Noleggio Tumbler Mini per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/tumbler-mini", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/TumblerMini.jpg?v=1735903409", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 0.6}]}, {"n": "Noleggio TV Ultra HD con stativo per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-tv-hd-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/TVconSupportodaterra.jpg?v=1706265366", "c": "Video e proiezione", "o": "Misura", "v": [{"l": "27''", "p": 25.0}, {"l": "32''", "p": 50.0}, {"l": "43”", "p": 80.0}, {"l": "50”", "p": 90.0}, {"l": "65''", "p": 150.0}, {"l": "75''", "p": 250.0}, {"l": "85''", "p": 310.0}, {"l": "supporto da terra per TV fino a 65''", "p": 30.0}, {"l": "supporto da terra per TV 75'' e 85''", "p": 70.0}]}, {"n": "Noleggio Vaso PVC nero e antracite Milano", "u": "https://topeventinoleggio.com/products/vaso-pvc-nero-e-antracite", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/VasoPVCAntracite_01.jpg?v=1776868506", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Noleggio Vassoi in Porcellana per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-vassoio-porcellana-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/porcellana_varie_misure.png?v=1578061203", "c": "Tavola e stoviglie", "o": "", "v": [{"l": "", "p": 7.0}]}, {"n": "Noleggio Vassoi Portata per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-vassoio-portata-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/portata_30x30_87466994-deea-4855-ab3b-7f539a6a03e8.png?v=1578061886", "c": "Tavola e stoviglie", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Noleggio Vassoio inox 48x36 con manici per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-vassoio-argento-manici-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Immagine2025-01-31152743.png?v=1776006327", "c": "Tavola e stoviglie", "o": "", "v": [{"l": "", "p": 20.0}]}, {"n": "Noleggio Vassoio inox tondo per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-vassoio-inox-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Vassoiotondoinox.jpg?v=1706265020", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Noleggio Vassoio quadrato plexiglass BIANCO 40x40 per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/vassoio-quadrato-plexiglass-bianco-40x40", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/VASSOI-PLEXI.jpg?v=1776005994", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 12.0}]}, {"n": "Noleggio Vassoio Rotondo Oro 38 cm per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/vassoio-rotondo-oro-38-cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Vassoio_ORO_rotondo_38cm_01.jpg?v=1755076329", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Noleggio Ventilatore 3 velocita' altezza 130 cm per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-ventilatori-130cm-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Ventilatoreconpiantana3velocitapala40cm.jpg?v=1706264590", "c": "Clima e riscaldamento", "o": "", "v": [{"l": "", "p": 8.0}]}, {"n": "Noleggio Ventilatore Cromato da pavimento per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/ventilatore-cromato-da-pavimento", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Ventilatoredaterra3velocitapala35cm_01.jpg?v=1724407764", "c": "Clima e riscaldamento", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Noleggio Ventilatore Nebulizzatore Serbatoio 41 lt per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-ventilatore-nebulizzatore-pro-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/VentilatoreNebulizzatore41lt_01.jpg?v=1741439841", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Noleggio Vetrina refrigerata orizzontale 130 L per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-vetrina130l-refrigerata-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Vetrina_orizzontale.jpg?v=1578137160", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 80.0}]}, {"n": "Noleggio Video Wall 49\" 2X2 ULTRA HD per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-videowall-2x2-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Video_wall.jpg?v=1776829859", "c": "Video e proiezione", "o": "", "v": [{"l": "", "p": 350.0}]}, {"n": "Noleggio Videoproiettore 2000 ansi lumen per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-videoproiettore-2000ansi-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Videoproiettore2000ansilumen.jpg?v=1706264149", "c": "Video e proiezione", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Noleggio Videoproiettore 5000 ansi lumen per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/noleggio-videoproiettore-5000-roma-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/videoproiettori.jpg?v=1578136175", "c": "Video e proiezione", "o": "", "v": [{"l": "", "p": 150.0}]}, {"n": "Noleggio Videoproiettore ACER 5200 ansi lumen per Feste ed Eventi a Milano", "u": "https://topeventinoleggio.com/products/videoproiettore-5200-ansi-lumen", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/ProiettoreACER5200ansilumen_02.jpg?v=1770983548", "c": "Video e proiezione", "o": "", "v": [{"l": "", "p": 150.0}]}, {"n": "Notebook (Office)", "u": "https://topeventinoleggio.com/products/notebook-office", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Notebook.jpg?v=1735893829", "c": "Altro", "o": "", "v": [{"l": "", "p": 80.0}]}, {"n": "Ombrello pioggia Nero", "u": "https://topeventinoleggio.com/products/ombrello-pioggia-nero", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Ombrellopioggianero.jpg?v=1735825896", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Orsogril 340x200", "u": "https://topeventinoleggio.com/products/orsogril-340x200", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/OrsogrilconTNTmonofacciale_1.jpg?v=1763994292", "c": "Sicurezza e tecnica", "o": "", "v": [{"l": "", "p": 12.0}]}, {"n": "Palco Modulare h. 40 cm", "u": "https://topeventinoleggio.com/products/noleggio-palco-2x1-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Palcomodulareh.40cm_01.jpg?v=1754649207", "c": "Audio e DJ", "o": "DIMENSIONE", "v": [{"l": "100x100", "p": 35.0}, {"l": "100x200", "p": 70.0}]}, {"n": "Palina con cordone intrecciato 2mt", "u": "https://topeventinoleggio.com/products/noleggio-colonnina-cordoni-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Palina_silver_cordone_blu.png?v=1755093074", "c": "Altro", "o": "Tipologia", "v": [{"l": "Palina Oro Cordone Rosso", "p": 12.0}, {"l": "Palina Silver Cordone Rosso", "p": 12.0}, {"l": "Palina Silver Cordone Blu", "p": 12.0}, {"l": "Palina Silver Cordone Nero", "p": 12.0}, {"l": "Palina Oro Cordone Blu", "p": 12.0}, {"l": "Palina Oro Cordone Nero", "p": 12.0}, {"l": "Palina Nero Opaco Cordone Nero", "p": 12.0}, {"l": "Palina Nero Opaco Cordone Rosso", "p": 12.0}, {"l": "Palina Nero Opaco Cordone Blu", "p": 12.0}]}, {"n": "Palina MUSEO Nera h. 45 cm con cordino Rosso o Nero", "u": "https://topeventinoleggio.com/products/palina-museo-nera-h-45-cm-con-cordino-rosso-o-nero", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PalinaMUSEONerah.45cm_01.jpg?v=1762858140", "c": "Altro", "o": "", "v": [{"l": "", "p": 12.0}]}, {"n": "Palina nera h. 200 cm per cartelli qualsiasi formato", "u": "https://topeventinoleggio.com/products/palina-nera-h-20cm-per-cartelli-qualsiasi-formato", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Palina_segnaletica_Nera_200cm_00.jpg?v=1755091287", "c": "Arredo e decoro", "o": "CARTELLO FOREX 5 mm con STAMPA PERSONALIZZATA F.to A4 / CARTELLO FOREX 5 mm con STAMPA PERSONALIZZATA F.to A3", "v": [{"l": "10 / 13", "p": 15.0}]}, {"n": "Pallone Basket", "u": "https://topeventinoleggio.com/products/noleggio-pallone-basket-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/pallone_basket.jpg?v=1577895764", "c": "Altro", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Pallone da Calcio", "u": "https://topeventinoleggio.com/products/noleggio-pallone-calcio-roma-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/pallonecalciovintagetopeventi.jpg?v=1585734791", "c": "Altro", "o": "Modello", "v": [{"l": "Classico", "p": 5.0}, {"l": "Vintage", "p": 5.0}]}, {"n": "Pallone Pallavolo o Beach Volley", "u": "https://topeventinoleggio.com/products/noleggio-pallone-pallavolo-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/pallavolo.jpg?v=1577895630", "c": "Altro", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Panca", "u": "https://topeventinoleggio.com/products/panca", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Pancafitness.jpg?v=1735913109", "c": "Sedute e divani", "o": "", "v": [{"l": "", "p": 40.0}]}, {"n": "Pannello Espositivo con Griglia 200x100", "u": "https://topeventinoleggio.com/products/pannello-espositivo-con-griglia-200x100", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PannelloespositivoGriglia200x100_01.jpg?v=1754316598", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 150.0}]}, {"n": "Pannello Forex bianco 100x190", "u": "https://topeventinoleggio.com/products/pannello-forex-bianco-100x190-con-ruote", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Pannello100x190forexBiancoconruote.jpg?v=1735901936", "c": "Arredo e decoro", "o": "", "v": [{"l": "", "p": 25.0}]}, {"n": "Paretina parafiato 100x75 cm", "u": "https://topeventinoleggio.com/products/paretina-parafiato-100x75-cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Paretinaparafiato.png?v=1735892929", "c": "Catering e bar", "o": "", "v": [{"l": "", "p": 30.0}]}, {"n": "Pedana modulare PVC e Legno 40x40", "u": "https://topeventinoleggio.com/products/noleggio-pedana-modulare-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/pedana.jpg?v=1577962714", "c": "Altro", "o": "", "v": [{"l": "", "p": 3.0}]}, {"n": "Pentola,Padella,Padellino STAINLESS STEEL per induzione", "u": "https://topeventinoleggio.com/products/noleggio-pentole-induzione-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/padella_induzione.png?v=1577963088", "c": "Altro", "o": "Tipologia", "v": [{"l": "Pentola", "p": 15.0}, {"l": "Padella", "p": 15.0}, {"l": "padellino", "p": 15.0}]}, {"n": "Pettorina vari colori", "u": "https://topeventinoleggio.com/products/noleggio-pettorine-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Casacchine.jpg?v=1577963387", "c": "Altro", "o": "", "v": [{"l": "", "p": 3.0}]}, {"n": "Pianta artificiale Bambù 170 cm", "u": "https://topeventinoleggio.com/products/noleggio-pianta-bambu-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/BambuArtificiale170cm_01.jpg?v=1754319277", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 35.0}]}, {"n": "Pianta Artificiale Ficus h. 170 cm", "u": "https://topeventinoleggio.com/products/noleggio-pianta-ficus-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/FicusArtificiale170cm_01.jpg?v=1754318945", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 35.0}]}, {"n": "Pianta artificiale Palma 150cm", "u": "https://topeventinoleggio.com/products/pianta-artificiale-palma-150cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Palma170cm.jpg?v=1724407057", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 40.0}]}, {"n": "PlayStation 5 + 2 joystick", "u": "https://topeventinoleggio.com/products/playstation-5-2-joystick", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PlayStation_5-PhotoRoom.png?v=1735893921", "c": "Video e proiezione", "o": "", "v": [{"l": "", "p": 100.0}]}, {"n": "Podio Zeta in plxiglass A3 Orizzontale h. 130cm", "u": "https://topeventinoleggio.com/products/podio-zeta-in-plxiglass-a3-orizzontale-h-130cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/LeggioZplexiglass_05.jpg?v=1724406779", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 100.0}]}, {"n": "Porta avvisi alluminio con A4 Verticale plexiglass h. 125cm", "u": "https://topeventinoleggio.com/products/porta-avvisi-alluminio-con-a4-verticale-plexiglass-h-125cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PalinaalluminioconportaavvisiinplexiglassA4verticale_01.jpg?v=1724405477", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 18.0}]}, {"n": "Porta Avvisi per palina", "u": "https://topeventinoleggio.com/products/porta-avvisi-per-palina", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PalinaconcordoneconportaavvisiA3Verticale.jpg?v=1724401836", "c": "Allestimento e segnaletica", "o": "Taglia", "v": [{"l": "A4 Verticale", "p": 6.0}, {"l": "A4 Orizzontale", "p": 6.0}, {"l": "A3 Verticale", "p": 8.0}]}, {"n": "Porta Avvisi per tendinastro", "u": "https://topeventinoleggio.com/products/noleggio-porta-comunicazione-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PortaavvisiA3OrizzontaleperTendinastro_01.jpg?v=1706268765", "c": "Altro", "o": "Tipologia", "v": [{"l": "A4", "p": 6.0}, {"l": "A3", "p": 8.0}]}, {"n": "Porta avvisi Total Plexi A4 Verticale o Orizzontale h. 120 cm", "u": "https://topeventinoleggio.com/products/porta-avvisi-total-plexi-a4-verticale-o-orizzontale-h-120-cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Portaavvisitotalplexih.120cmF.toA4Verticalechiusuramagnetica_01.jpg?v=1735892442", "c": "Allestimento e segnaletica", "o": "", "v": [{"l": "", "p": 12.0}]}, {"n": "Porta da Calcio 180x120 cm", "u": "https://topeventinoleggio.com/products/porta-da-calcio-180x120-cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/PortaCalcio180x120.jpg?v=1735913493", "c": "Giochi e intrattenimento", "o": "", "v": [{"l": "", "p": 25.0}]}, {"n": "Porta secchiello acciaio", "u": "https://topeventinoleggio.com/products/porta-secchiello-acciaio", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/posacenere_60_cm.jpg?v=1578062072", "c": "Altro", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Porta tablet 10’’", "u": "https://topeventinoleggio.com/products/porta-tablet-10", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Portatablet_2.jpg?v=1735893990", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Portaombrelli Nero", "u": "https://topeventinoleggio.com/products/portaombrelli-nero", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Portaombrellinero.jpg?v=1724406439", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 8.0}]}, {"n": "Posacenere acciaio a stelo", "u": "https://topeventinoleggio.com/products/noleggio-posacenere-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/posacenere_60_cm.jpg?v=1578062072", "c": "Altro", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Posacenere Nero con cestino", "u": "https://topeventinoleggio.com/products/posacenere-nero-h-60cm-con-cestino", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Cestinoconposacenereneroh.60cm_01.jpg?v=1724406481", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Quadro Elettrico", "u": "https://topeventinoleggio.com/products/noleggio-quadro-elettrico-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/quadro_elettrico.jpg?v=1578062680", "c": "Arredo e decoro", "o": "", "v": [{"l": "", "p": 80.0}]}, {"n": "Radiomicrofono Doppio", "u": "https://topeventinoleggio.com/products/noleggio-radiomicrofono-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Radiomicrofonodoppio.jpg?v=1706269377", "c": "Audio e DJ", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Red Carpet 10 m Con Paline ottone", "u": "https://topeventinoleggio.com/products/noleggio-red-carpet-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/image_e46c57fb-8a37-4fa6-bd90-44e889a43f5f.jpg?v=1582391554", "c": "Altro", "o": "", "v": [{"l": "", "p": 300.0}]}, {"n": "Red Carpet 4 m Con Paline ottone", "u": "https://topeventinoleggio.com/products/noleggio-red-carpet-milano-roma-1", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/image_a08799b8-8d61-4d23-8507-c4e7bfe95a93.jpg?v=1578764484", "c": "Altro", "o": "", "v": [{"l": "", "p": 200.0}]}, {"n": "Rete da Pallavolo o Beach Volley", "u": "https://topeventinoleggio.com/products/noleggio-rete-da-pallavolo-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Rete_da_pallavolo.jpg?v=1578063573", "c": "Altro", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Scivolo GONFIABILE h. 1 m", "u": "https://topeventinoleggio.com/products/scivolo-gonfiabile-h-1-m", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Scivoloh.1m.jpg?v=1735920637", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Separè in Legno verniciato Nero 170x185", "u": "https://topeventinoleggio.com/products/separe-legno-nero-170x185", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SeparelegnoNero170x185_03_cfc7f6e4-5091-4640-a0cf-ed2093fd2cc5.png?v=1744647287", "c": "Arredo e decoro", "o": "", "v": [{"l": "", "p": 20.0}]}, {"n": "Set piatti FILO ORO", "u": "https://topeventinoleggio.com/products/noleggio-piatto-bianco-filo-oro-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/20200207_163759-Copia-scaled.jpg?v=1736873522", "c": "Tavola e stoviglie", "o": "Misura", "v": [{"l": "Pane(17 cm)", "p": 1.8}, {"l": "Frutta(23 cm)", "p": 1.8}, {"l": "Piano(27 cm)", "p": 1.8}, {"l": "Fondo(27 cm)", "p": 1.8}, {"l": "Sottopiatto", "p": 4.5}]}, {"n": "Shaker", "u": "https://topeventinoleggio.com/products/noleggio-shaker-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Shaker.png?v=1578134522", "c": "Altro", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Sottopiatto Vetro", "u": "https://topeventinoleggio.com/products/noleggio-sottopiatti-vetro-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SottopiattoVETRO.jpg?v=1706267707", "c": "Tavola e stoviglie", "o": "", "v": [{"l": "", "p": 2.0}]}, {"n": "Specchio figura intera 40x167cm NERO", "u": "https://topeventinoleggio.com/products/specchio-nero-figura-intera-40x167cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Specchio_figura_intera_Nero_40x167cm_Autoportante_01.jpg?v=1755090834", "c": "Arredo e decoro", "o": "", "v": [{"l": "", "p": 30.0}]}, {"n": "Specchio figura intera 52x167cm LEGNO", "u": "https://topeventinoleggio.com/products/specchio-legno-figura-intera-52x167cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SpecchiofigurainteraLegno52x167cmAutoportante-PhotoRoom.png?v=1724408128", "c": "Arredo e decoro", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Spinbike professionale", "u": "https://topeventinoleggio.com/products/noleggio-cyclette-spinning-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Spinbike_01.jpg?v=1755092943", "c": "Altro", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Stampante A4 Backoffice", "u": "https://topeventinoleggio.com/products/noleggio-stampante-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/stampante.jpg?v=1578157991", "c": "Altro", "o": "Variante", "v": [{"l": "Tricolor", "p": 12.0}, {"l": "Nero", "p": 12.0}, {"l": "Stampante A4", "p": 30.0}, {"l": "Stampante A3/A4", "p": 100.0}]}, {"n": "Steamer portatile", "u": "https://topeventinoleggio.com/products/steamer-portatile", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Steamerportatile.jpg?v=1735902867", "c": "Altro", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "Stender acciaio CROMO con ruote Mod. 1", "u": "https://topeventinoleggio.com/products/noleggio-appendiabiti-roma-milano", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/StenderacciaocromoMOD.1cm110-150conruote.jpg?v=1705930066", "c": "Altro", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Stender acciaio CROMO con ruote Mod. 2", "u": "https://topeventinoleggio.com/products/stender-acciaio-cromo-con-ruote-mod-2", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/StenderacciaiocromoMOD.2cm92-132conruote_01.jpg?v=1735900829", "c": "Altro", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Stender acciaio NERO con ruote", "u": "https://topeventinoleggio.com/products/stender-acciaio-nero-con-ruote", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/StenderacciaioNERO_01.jpg?v=1769422254", "c": "Altro", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Stirella a vapore verticale PRO", "u": "https://topeventinoleggio.com/products/stirella-verticale", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/api-rest-00ed29448a7522f610cac04d7b9ea7e0-assets-f93692607c2b92da18c4f4ce83077483-preview-sgmConversionBaseFormat.jpg?v=1746433561", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 50.0}]}, {"n": "Supporto Tablet da terra con antifurto", "u": "https://topeventinoleggio.com/products/supporto-tablet-da-terra-con-antifurto", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/SupportodaterrapertabletMod.A_01.jpg?v=1753888414", "c": "Altro", "o": "", "v": [{"l": "", "p": 20.0}]}, {"n": "Tappeto / Carpet", "u": "https://topeventinoleggio.com/products/tappeto-carpet", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/GammaFELTROAGUGLIATO.jpg?v=1773220559", "c": "Arredo e decoro", "o": "LARGHEZZA", "v": [{"l": "2 metri", "p": 15.0}, {"l": "1 metro", "p": 10.0}]}, {"n": "Tappo Speed Pourer", "u": "https://topeventinoleggio.com/products/noleggio-speed-pourer-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/Speed_Pourer.png?v=1578159265", "c": "Altro", "o": "", "v": [{"l": "", "p": 0.5}]}, {"n": "Tavolo Ping Pong", "u": "https://topeventinoleggio.com/products/noleggio-tavolo-ping-pong-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/TavoloPingPongBLU_01_3.jpg?v=1747651732", "c": "Tavoli", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Teca Espositiva 50x50x150", "u": "https://topeventinoleggio.com/products/teca-espositiva-50x50x150", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/white-Photoroom_6.jpg?v=1754381223", "c": "Allestimento e segnaletica", "o": "Colore", "v": [{"l": "bianco", "p": 165.0}, {"l": "nero", "p": 165.0}]}, {"n": "Tendinastro Acciaio", "u": "https://topeventinoleggio.com/products/noleggio-tendilfex-acciaio-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/acciaio_nero.jpg?v=1586157529", "c": "Altro", "o": "Color", "v": [{"l": "Nastro nero", "p": 10.0}, {"l": "Nastro Rosso", "p": 10.0}, {"l": "Nastro blu", "p": 10.0}, {"l": "Nastro Verde", "p": 10.0}, {"l": "Nastro Giallo", "p": 10.0}, {"l": "Nastro Giallo/Nero", "p": 10.0}, {"l": "Nastro Bianco", "p": 10.0}, {"l": "Nastro Bianco/Rosso", "p": 10.0}]}, {"n": "Thermos 2 lt", "u": "https://topeventinoleggio.com/products/noleggio-termos-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Thermos_2_lt_01_1.jpg?v=1739533847", "c": "Altro", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "TNT nero 100 gr monofacciale per Orsogril", "u": "https://topeventinoleggio.com/products/tnt-nero-100-gr-monofacciale-per-orsogril", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Telodicoperturaperorsogrill.jpg?v=1735921883", "c": "Sicurezza e tecnica", "o": "", "v": [{"l": "", "p": 6.0}]}, {"n": "Transenna Antipanico 100x120 cm", "u": "https://topeventinoleggio.com/products/transenna-antipanico-100x120-cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Transennaantipanicoferrooalluminio_02.jpg?v=1735921326", "c": "Sicurezza e tecnica", "o": "", "v": [{"l": "", "p": 40.0}]}, {"n": "Transenna stradale in ferro 200x110 cm", "u": "https://topeventinoleggio.com/products/noleggio-transenna-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/transenna_stradale.jpg?v=1578139155", "c": "Sicurezza e tecnica", "o": "", "v": [{"l": "", "p": 10.0}]}, {"n": "TWIGBALL da Interno", "u": "https://topeventinoleggio.com/products/noleggio-twigball-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/products/twigball.jpg?v=1577981362", "c": "Altro", "o": "", "v": [{"l": "", "p": 70.0}]}, {"n": "Vaso plasica bianco h. 80 cm", "u": "https://topeventinoleggio.com/products/vaso-plasica-bianco-h-80-cm", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Portavaso_3.jpg?v=1735829180", "c": "Esterno e giardino", "o": "", "v": [{"l": "", "p": 15.0}]}, {"n": "Vassoio Nero rotondo antiscivolo 28cm", "u": "https://topeventinoleggio.com/products/noleggio-vassoio-antiscivolo-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Vassoioantiscivolonerorotondo.jpg?v=1706264789", "c": "Tavola e stoviglie", "o": "", "v": [{"l": "", "p": 5.0}]}, {"n": "Vetrina Frigo 306 lt", "u": "https://topeventinoleggio.com/products/noleggio-vetrina-frigo-270lt-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Frigovetrina270lt.jpg?v=1706264472", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 150.0}]}, {"n": "Vetrina Frigo 78 lt", "u": "https://topeventinoleggio.com/products/noleggio-vetrina-frigo-78l-milano-roma", "i": "https://cdn.shopify.com/s/files/1/0102/3079/2277/files/Frigovetrina78lt.png?v=1706264404", "c": "Attrezzature cucina", "o": "", "v": [{"l": "", "p": 80.0}]}];
+
+const coeff=d=>{if(d<=4)return 1;if(d<=6)return 1.2;if(d===7)return 1.3;if(d<=9)return 1.4;return Math.round((1.5+(d-10)*0.1)*10)/10;};
+const euro=n=>"€ "+(n||0).toLocaleString("it-IT",{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtD=s=>{if(!s)return"";const p=s.split("-");return p.length===3?`${p[2]}-${p[1]}-${p[0]}`:s;};
+function cleanName(n){
+  let s=(n||"").trim().replace(/^noleggio\s+/i,'');
+  s=s.replace(/\s+per\s+.*$/i,'');
+  s=s.replace(/[\s,–-]+(milano|roma|vicenza|bergamo|brescia|torino)(\s+(milano|roma|vicenza|bergamo|brescia|torino))*\s*$/i,'');
+  return s.replace(/\s{2,}/g,' ').trim();
+}
+
+let modalita="consegna", magazzinoRitiro="Milano Opera – Via Fornace Cavallino, snc";
+let cart=[], last={}, transportResult=null;
+
+/* ====== CATEGORIE / RICERCA ====== */
+const cats=[...new Set(PRODOTTI.map(p=>p.c))].sort();
+const catSel=document.getElementById("catFilter");
+cats.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;catSel.appendChild(o);});
+const results=document.getElementById("results");
+function renderResults(){
+  const q=(document.getElementById("search").value||"").toLowerCase().trim();
+  const cf=catSel.value;
+  let list=PRODOTTI.filter(p=>(!cf||p.c===cf)&&(!q||p.n.toLowerCase().includes(q)));
+  results.innerHTML=list.slice(0,80).map(p=>{
+    const idx=PRODOTTI.indexOf(p);
+    const multi=p.v.length>1;
+    const pp=multi?"da "+euro(Math.min(...p.v.map(v=>v.p))):euro(p.v[0].p);
+    const sel=multi?`<select class="vsel" data-i="${idx}">`+p.v.map((v,j)=>`<option value="${j}">${v.l} — ${euro(v.p)}</option>`).join("")+`</select>`:"";
+    const tag=multi?`<span class="vtag">${p.v.length} varianti</span>`:"";
+    return `<div class="pitem"><img loading="lazy" src="${p.i||''}" onerror="this.style.visibility='hidden'">
+      <div class="pn">${cleanName(p.n)}<span class="ctag">${p.c}</span>${tag}${sel}</div>
+      <div class="pp">${pp}</div><button class="add" data-i="${idx}">+</button></div>`;
+  }).join("")||`<div class="empty">Nessun prodotto trovato.</div>`;
+  results.querySelectorAll(".add").forEach(b=>b.onclick=()=>addToCart(+b.dataset.i));
+}
+document.getElementById("search").oninput=renderResults;
+catSel.onchange=renderResults;
+renderResults();
+
+function addToCart(i){
+  const p=PRODOTTI[i];
+  let vj=0;
+  if(p.v.length>1){const s=results.querySelector(`select.vsel[data-i="${i}"]`);vj=s?+s.value:0;}
+  const v=p.v[vj];
+  const vpart=v.l?` — ${p.o}: ${v.l}`:'';
+  const name=cleanName(p.n)+vpart;
+  const key=p.n+"||"+v.l;
+  const ex=cart.find(c=>c.key===key);
+  if(ex)ex.q++; else cart.push({key,n:name,baseName:p.n,variant:vpart,cat:p.c,img:p.i,u:p.u,p:v.p,q:1});
+  refresh();
+}
+function refresh(){recompute();renderCart();}
+function renderCart(){
+  const c=document.getElementById("cart");
+  if(!cart.length){c.innerHTML='<div class="empty">Nessun prodotto selezionato.</div>';return;}
+  const kEff=(last.g>0)?last.k:1;
+  c.innerHTML=cart.map((it,i)=>{const unit=(it.unit!=null)?it.unit:it.p*kEff;return `<div class="crow-wrap"><div class="crow">
+    <div class="cn">${it.n}</div>
+    <div class="punit"><input class="pprice" data-p="${i}" type="number" min="0" step="0.01" value="${unit.toFixed(2)}"><span>€/cad</span></div>
+    <div class="qty"><button data-d="${i}" data-a="-">−</button><input value="${it.q}" data-q="${i}"><button data-d="${i}" data-a="+">+</button></div>
+    <div class="cp" id="cp-${i}">${euro(unit*it.q)}</div><button class="del" data-x="${i}">🗑</button></div>
+    <input class="pnote" data-n="${i}" placeholder="Note per questo prodotto (verranno stampate sotto il prodotto nel PDF)" value="${(it.note||'').replace(/"/g,'&quot;')}"></div>`;}).join("");
+  c.querySelectorAll("button[data-a]").forEach(b=>b.onclick=()=>{const i=+b.dataset.d;cart[i].q+=b.dataset.a==="+"?1:-1;if(cart[i].q<1)cart[i].q=1;refresh();});
+  c.querySelectorAll("input[data-q]").forEach(inp=>inp.onchange=()=>{const i=+inp.dataset.q;let v=parseInt(inp.value)||1;cart[i].q=v<1?1:v;refresh();});
+  c.querySelectorAll(".pprice").forEach(inp=>inp.oninput=()=>{const i=+inp.dataset.p;cart[i].unit=parseFloat(inp.value)||0;cart[i].priceEdited=true;document.getElementById('cp-'+i).textContent=euro(cart[i].unit*cart[i].q);recalcImp();});
+  c.querySelectorAll(".pnote").forEach(inp=>inp.oninput=()=>{cart[+inp.dataset.n].note=inp.value;});
+  c.querySelectorAll(".del").forEach(b=>b.onclick=()=>{cart.splice(+b.dataset.x,1);refresh();});
+}
+
+/* ====== GIORNI / CALCOLO NOLEGGIO ====== */
+function calcGiorni(){
+  const a=document.getElementById("data_consegna").value,b=document.getElementById("data_ritiro").value;
+  if(!a||!b)return 0;
+  const diff=Math.round((new Date(b)-new Date(a))/86400000)+1;
+  return diff>0?diff:0;
+}
+function updateTotals(){
+  const imp=parseFloat(document.getElementById("imp_manual").value)||0;
+  const iva=imp*IVA,tot=imp+iva;
+  document.getElementById("r_iva").textContent=euro(iva);
+  document.getElementById("r_tot").textContent=euro(tot);
+  last.imp=imp;last.iva=iva;last.tot=tot;
+}
+function recalcImp(){const imp=cart.reduce((s,it)=>s+(it.unit||0)*it.q,0);document.getElementById("imp_manual").value=imp.toFixed(2);updateTotals();}
+function recompute(){
+  const g=calcGiorni();const k=g>0?coeff(g):1;
+  last.g=g;last.k=k;
+  cart.forEach(it=>{if(!it.priceEdited)it.unit=+(it.p*k).toFixed(2);});
+  const imp=cart.reduce((s,it)=>s+(it.unit||0)*it.q,0);
+  document.getElementById("r_giorni").textContent=g>0?g+(g===1?" giorno":" giorni"):"—";
+  document.getElementById("r_articoli").textContent=cart.reduce((s,i)=>s+i.q,0);
+  document.getElementById("imp_manual").value=imp.toFixed(2);
+  updateTotals();
+  const gi=document.getElementById("giorniInfo");
+  if(g>0)gi.innerHTML=`Periodo di noleggio: <b>${g} ${g===1?'giorno':'giorni'}</b>. Prezzi aggiornati ai giorni selezionati.`;
+  else gi.textContent="Senza date il prezzo mostrato è quello base (noleggio fino a 3 giorni).";
+}
+document.getElementById("data_consegna").onchange=refresh;
+document.getElementById("data_ritiro").onchange=refresh;
+document.getElementById("imp_manual").oninput=updateTotals;
+recompute();
+
+/* ====== MODALITA ====== */
+document.querySelectorAll("#segMod button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#segMod button").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on");modalita=b.dataset.m;
+  const cons=modalita==="consegna",rit=modalita==="ritiro",dac=modalita==="dacalcolare";
+  document.getElementById("boxConsegna").classList.toggle("hide",!cons);
+  document.getElementById("boxRitiro").classList.toggle("hide",!rit);
+  document.getElementById("boxDacalcolare").classList.toggle("hide",!dac);
+  document.getElementById("traspWrap").style.display=cons?'':'none';
+  const opt=' <span style="color:var(--muto);font-weight:400">(opzionale)</span>';
+  if(rit){
+    document.getElementById("lbl_data1").innerHTML='Data di ritiro'+opt;
+    document.getElementById("lbl_data2").innerHTML='Data di riconsegna'+opt;
+    document.getElementById("lbl_fascia1").textContent='Fascia oraria di ritiro';
+    document.getElementById("lbl_fascia2").textContent='Fascia oraria di riconsegna';
+  }else{
+    document.getElementById("lbl_data1").innerHTML='Data consegna'+opt;
+    document.getElementById("lbl_data2").innerHTML='Data ritiro'+opt;
+    document.getElementById("lbl_fascia1").textContent='Fascia oraria di consegna';
+    document.getElementById("lbl_fascia2").textContent='Fascia oraria di ritiro';
+  }
+});
+function dateLabels(){return modalita==="ritiro"?{l1:"Ritiro",l2:"Riconsegna"}:{l1:"Consegna",l2:"Ritiro"};}
+function toggleFasciaTxt(which){document.getElementById('fascia_'+which+'_txt').classList.toggle('hide',document.getElementById('fascia_'+which).value!=='__custom__');}
+document.getElementById('fascia_consegna').onchange=()=>toggleFasciaTxt('consegna');
+document.getElementById('fascia_ritiro').onchange=()=>toggleFasciaTxt('ritiro');
+function getFascia(which){const s=document.getElementById('fascia_'+which);if(s.value==='__custom__'){return document.getElementById('fascia_'+which+'_txt').value.trim()||'orario preciso da concordare';}return s.value;}
+document.querySelectorAll(".wh").forEach(w=>w.onclick=()=>{document.querySelectorAll(".wh").forEach(x=>x.classList.remove("on"));w.classList.add("on");magazzinoRitiro=w.dataset.w;});
+
+/* ====== UPSELL ====== */
+const COMPL={
+ 'Sedute e divani':['Tavoli','Tavola e stoviglie','Tessuti'],
+ 'Tavoli':['Sedute e divani','Tavola e stoviglie','Tessuti'],
+ 'Tavola e stoviglie':['Catering e bar','Attrezzature cucina','Tavoli'],
+ 'Attrezzature cucina':['Catering e bar','Tavola e stoviglie'],
+ 'Catering e bar':['Tavola e stoviglie','Attrezzature cucina'],
+ 'Audio e DJ':['Video e proiezione','Illuminazione','Allestimento e segnaletica'],
+ 'Video e proiezione':['Audio e DJ','Allestimento e segnaletica'],
+ 'Clima e riscaldamento':['Esterno e giardino','Illuminazione'],
+ 'Esterno e giardino':['Clima e riscaldamento','Illuminazione','Sedute e divani'],
+ 'Illuminazione':['Allestimento e segnaletica','Audio e DJ'],
+ 'Allestimento e segnaletica':['Illuminazione','Video e proiezione'],
+ 'Giochi e intrattenimento':['Audio e DJ','Esterno e giardino'],
+ 'Tessuti':['Tavoli','Tavola e stoviglie'],
+ 'Sicurezza e tecnica':['Allestimento e segnaletica'],
+ 'Arredo e decoro':['Sedute e divani','Illuminazione','Tessuti'],
+ 'Altro':[]
+};
+const FALLBACK_ORDER=['Tavoli','Sedute e divani','Tavola e stoviglie','Tessuti','Allestimento e segnaletica','Catering e bar','Esterno e giardino','Illuminazione'];
+function suggestUpsell(){
+  if(!cart.length)return[];
+  const inCart=new Set(cart.map(c=>c.baseName));
+  const freq={};cart.forEach(c=>freq[c.cat]=(freq[c.cat]||0)+1);
+  // categorie presenti nel carrello ordinate per frequenza (stessa categoria prima)
+  const present=Object.keys(freq).sort((a,b)=>freq[b]-freq[a]);
+  const dom=present[0];
+  // priorità: stessa/e categoria/e del carrello → complementari → fallback coerente
+  const order=[];
+  const push=c=>{if(c&&c!=='Altro'&&!order.includes(c))order.push(c);};
+  present.forEach(push);
+  present.forEach(c=>(COMPL[c]||[]).forEach(push));
+  FALLBACK_ORDER.forEach(push);
+  const recs=[];
+  for(const cat of order){for(const p of PRODOTTI){if(p.c===cat&&!inCart.has(p.n)&&!recs.find(x=>x.n===p.n)){recs.push(p);if(recs.length>=6)return recs;}}}
+  return recs;
+}
+
+/* ════════════ CALCOLATORE TRASPORTI ════════════ */
+const VEHICLES={'Doblò':{costoFisso:5,rap50:5,rap100:10},'Jumper':{costoFisso:10,rap50:12.5,rap100:25},'Cassonato':{costoFisso:20,rap50:25,rap100:50}};
+const COSTO_KM=0.5,COSTO_KG=0.1,PREZZO_MINIMO=40;
+const DAY_MULT={Feriale:0,Sabato:50,Festivo:90};
+const TIME_MULT={ORD:0,EXORD:60,NOT1:90,NOT2:150};
+const TIME_LABEL={ORD:'09:00–18:00',EXORD:'06–09/18–22',NOT1:'22:00–24:00',NOT2:'00:00–06:00'};
+let selectedVehicle=null,selectedLoad=null,selectedPeople=0,stopCount=0,mapsReady=false,directionsService=null,fornitoreEnabled=false;
+const toggleState={'alta-stagione':false,'centro-storico':false,'ztl':false,'piano':false};
+
+window.initMaps=function(){
+  mapsReady=true;directionsService=new google.maps.DirectionsService();
+  const bar=document.getElementById('maps-status-bar');bar.className='status-bar active';
+  document.getElementById('maps-status-text').textContent='Google Maps attivo — calcolo km automatico ✓';
+  document.getElementById('btn-calc-route').style.display='flex';
+  document.getElementById('btn-calc-fornitore').style.display='flex';
+  new google.maps.places.Autocomplete(document.getElementById('destination'),{componentRestrictions:{country:'it'}});
+  new google.maps.places.Autocomplete(document.getElementById('fornitore-custom'),{componentRestrictions:{country:'it'}});
+  document.querySelectorAll('.stop-input').forEach(initStopAC);
+};
+setTimeout(()=>{if(!mapsReady){const bar=document.getElementById('maps-status-bar');bar.className='status-bar inactive';document.getElementById('maps-status-text').textContent='Google Maps non disponibile — inserisci i km manualmente';}},6000);
+function initStopAC(input){if(mapsReady&&!input._ac)input._ac=new google.maps.places.Autocomplete(input,{componentRestrictions:{country:'it'}});}
+function calcRoute(origin,dest,waypoints,onSuccess,btnEl){
+  btnEl.textContent='⏳ Calcolo…';
+  directionsService.route({origin,destination:dest,waypoints:waypoints||[],travelMode:google.maps.TravelMode.DRIVING,region:'it'},(result,status)=>{
+    btnEl.innerHTML='📍 Calcola con Maps';
+    if(status==='OK'){let m=0;result.routes[0].legs.forEach(l=>{m+=l.distance.value;});onSuccess(Math.round(m/1000));}
+    else alert('Errore Maps: '+status+'\nVerifica gli indirizzi.');
+  });
+}
+function calculateRoute(){
+  if(!mapsReady)return;
+  const dest=document.getElementById('destination').value.trim();
+  if(!dest){alert('Inserisci la destinazione.');return;}
+  const wps=Array.from(document.querySelectorAll('.stop-input')).map(i=>i.value.trim()).filter(v=>v).map(loc=>({location:loc,stopover:true}));
+  calcRoute(document.getElementById('departure').value,dest,wps,km=>{document.getElementById('km-input').value=km;onKmChange();},document.getElementById('btn-calc-route'));
+}
+function calculateFornitoreRoute(){
+  if(!mapsReady)return;
+  let dest=document.getElementById('fornitore-select').value;
+  if(dest==='__altro__')dest=document.getElementById('fornitore-custom').value.trim();
+  if(!dest){alert("Seleziona o inserisci l'indirizzo del fornitore.");return;}
+  calcRoute(document.getElementById('departure').value,dest,[],km=>{document.getElementById('km-fornitore').value=km;onKmFornitoreChange();},document.getElementById('btn-calc-fornitore'));
+}
+function addStop(){
+  if(stopCount>=3){alert('Massimo 3 tappe.');return;}
+  stopCount++;const id='stop-'+stopCount;
+  const div=document.createElement('div');div.className='stop-row';div.id='sr-'+stopCount;
+  div.innerHTML=`<input type="text" class="stop-input" id="${id}" placeholder="Tappa ${stopCount}…"><button class="btn-remove-stop" type="button" onclick="removeStop(${stopCount})">✕</button>`;
+  document.getElementById('stops-container').appendChild(div);initStopAC(document.getElementById(id));
+}
+function removeStop(n){const el=document.getElementById('sr-'+n);if(el)el.remove();}
+function toggleFornitore(){
+  fornitoreEnabled=!fornitoreEnabled;
+  document.getElementById('ti-fornitore').classList.toggle('active',fornitoreEnabled);
+  document.getElementById('ts-fornitore').classList.toggle('on',fornitoreEnabled);
+  document.getElementById('fornitore-fields').style.display=fornitoreEnabled?'block':'none';
+  if(!fornitoreEnabled){document.getElementById('km-fornitore').value='';document.getElementById('km-fornitore-total-display').textContent='—';}
+}
+function onFornitoreSelectChange(){
+  const val=document.getElementById('fornitore-select').value;
+  document.getElementById('fornitore-custom-row').style.display=val==='__altro__'?'block':'none';
+  if(mapsReady&&val&&val!=='__altro__')calculateFornitoreRoute();
+}
+function onKmFornitoreChange(){const km=parseFloat(document.getElementById('km-fornitore').value)||0;document.getElementById('km-fornitore-total-display').textContent=km>0?(km*4):'—';}
+function selectVehicle(name){selectedVehicle=name;document.querySelectorAll('.vehicle-card').forEach(c=>c.classList.remove('selected'));document.getElementById('v-'+name).classList.add('selected');document.getElementById('l-50-detail').textContent=`(indice: ${VEHICLES[name].rap50})`;}
+function selectLoad(pct){selectedLoad=pct;document.querySelectorAll('.load-option').forEach(c=>c.classList.remove('selected'));document.getElementById('l-'+pct).classList.add('selected');}
+function onKmChange(){const km=parseFloat(document.getElementById('km-input').value)||0;document.getElementById('km-ar-display').textContent=km>0?(km*2):'—';}
+function toggleOpt(id){toggleState[id]=!toggleState[id];document.getElementById('ti-'+id).classList.toggle('active',toggleState[id]);document.getElementById('ts-'+id).classList.toggle('on',toggleState[id]);}
+function selectPeople(n){selectedPeople=n;document.querySelectorAll('.people-btn').forEach(b=>b.classList.remove('selected'));document.getElementById('p-'+n).classList.add('selected');}
+function calculatePrice(){
+  if(!selectedVehicle){alert('Seleziona un furgone.');return;}
+  if(!selectedLoad){alert('Seleziona la percentuale di carico.');return;}
+  const km1=parseFloat(document.getElementById('km-input').value)||0;
+  if(km1<=0){alert('Inserisci i km (sola andata).');return;}
+  const kmAR=km1*2,v=VEHICLES[selectedVehicle],rapportoVol=selectedLoad===50?v.rap50:v.rap100;
+  const costoFisso=v.costoFisso,costoDistanza=kmAR*COSTO_KM,costoCarico=rapportoVol*COSTO_KG,BASE=costoFisso+costoDistanza+costoCarico;
+  const dayMult=DAY_MULT[document.getElementById('day-type').value]||0;
+  const timeMult=TIME_MULT[document.getElementById('time-slot').value]||0;
+  const centroStorico=toggleState['centro-storico']?50:0;
+  const ztl=toggleState['ztl']?75:0;
+  const persone=selectedPeople===1?40:selectedPeople===2?60:0;
+  const flatTotal=dayMult+timeMult+centroStorico+ztl+persone;
+  const durationMult=parseFloat(document.getElementById('duration').value)||0;
+  const pianoMult=toggleState['piano']?0.30:0;
+  const loadMult=selectedLoad===100?0.30:0;
+  const altaStagione=toggleState['alta-stagione']?BASE*0.10:0;
+  const multTotal=BASE*durationMult+BASE*pianoMult+BASE*loadMult;
+  let costoFornitore=0,kmFornitore1way=0,fornitoreLabel='';
+  if(fornitoreEnabled){kmFornitore1way=parseFloat(document.getElementById('km-fornitore').value)||0;costoFornitore=kmFornitore1way*4*0.20;const sel=document.getElementById('fornitore-select');fornitoreLabel=sel.value==='__altro__'?(document.getElementById('fornitore-custom').value||'Fornitore'):sel.options[sel.selectedIndex].text;}
+  const prezzoCalcolato=BASE+flatTotal+altaStagione+multTotal+costoFornitore;
+  const minimumApplied=prezzoCalcolato<PREZZO_MINIMO;
+  const prezzoFinale=minimumApplied?PREZZO_MINIMO:prezzoCalcolato;
+  displayResults({km1,kmAR,rapportoVol,costoFisso,costoDistanza,costoCarico,BASE,dayMult,timeMult,centroStorico,ztl,persone,flatTotal,altaStagione,durationMult,pianoMult,loadMult,multTotal,costoFornitore,kmFornitore1way,fornitoreLabel,prezzoCalcolato,minimumApplied,prezzoFinale});
+}
+function tfmt(n){return n.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function displayResults(d){
+  const deptText=document.getElementById('departure').options[document.getElementById('departure').selectedIndex].text;
+  const destText=document.getElementById('destination').value||'destinazione';
+  const durLabel=document.getElementById('duration').options[document.getElementById('duration').selectedIndex].text;
+  const sub=`${deptText} → ${destText}  ·  ${selectedVehicle} ${selectedLoad}%  ·  ${d.km1} km (${d.kmAR} km A/R)`;
+  document.getElementById('res-subtitle').textContent=sub;
+  let rows='';const addRow=(label,val)=>{if(!val||val===0)return;rows+=`<tr><td class="td-label">${label}</td><td class="td-val">€ ${tfmt(val)}</td></tr>`;};
+  addRow(`Costo fisso — ${selectedVehicle}`,d.costoFisso);
+  addRow(`Distanza A/R (${d.kmAR} km × €${COSTO_KM}/km)`,d.costoDistanza);
+  addRow(`Carico/volume (indice ${d.rapportoVol} × €${COSTO_KG})`,d.costoCarico);
+  if(d.loadMult>0)addRow(`Carico pieno 100% (+30% × base €${tfmt(d.BASE)})`,d.BASE*d.loadMult);
+  addRow(`Suppl. giornaliero — ${document.getElementById('day-type').value}`,d.dayMult);
+  addRow(`Fascia oraria — ${TIME_LABEL[document.getElementById('time-slot').value]}`,d.timeMult);
+  if(d.altaStagione>0)addRow(`Alta stagione (+10% × base €${tfmt(d.BASE)})`,d.altaStagione);
+  addRow('Indirizzo centro storico',d.centroStorico);
+  addRow('ZTL Quadrilatero Moda Milano',d.ztl);
+  if(d.persone>0)addRow(`${selectedPeople} ${selectedPeople===1?'persona':'persone'} extra`,d.persone);
+  if(d.durationMult>0)addRow(`Ampiezza fascia oraria — ${durLabel} (${d.durationMult*100}% × base €${tfmt(d.BASE)})`,d.BASE*d.durationMult);
+  if(d.pianoMult>0)addRow(`Consegna al piano con ascensore (30% × base €${tfmt(d.BASE)})`,d.BASE*d.pianoMult);
+  if(d.costoFornitore>0)addRow(`Fornitore: ${d.fornitoreLabel} (4 × ${d.kmFornitore1way} km × €0,20/km)`,d.costoFornitore);
+  if(d.minimumApplied)rows+=`<tr><td colspan="2" style="padding:8px 4px"><div style="background:#fff3cd;border:1px solid #ffc107;border-radius:6px;padding:8px 12px;font-size:12px;color:#856404">⚠️ Importo (€ ${tfmt(d.prezzoCalcolato)}) inferiore al minimo — applicato <strong>minimo €40,00</strong></div></td></tr>`;
+  rows+=`<tr class="tr-total"><td class="td-label">TOTALE${d.minimumApplied?' (minimo applicato)':''}</td><td class="td-val">€ ${tfmt(d.prezzoFinale)}</td></tr>`;
+  document.getElementById('breakdown-table').innerHTML=rows;
+  document.getElementById('ph-amount').textContent=`€ ${tfmt(d.prezzoFinale)}`;
+  document.getElementById('d-50').textContent=`€ ${tfmt(d.prezzoFinale*0.5)}`;
+  document.getElementById('d-30').textContent=`€ ${tfmt(d.prezzoFinale*0.7)}`;
+  const rs=document.getElementById('results-section');rs.style.display='block';rs.scrollIntoView({behavior:'smooth',block:'start'});
+  transportResult={prezzo:d.prezzoFinale,sub:sub};
+  document.getElementById('trasp_manual').value=d.prezzoFinale.toFixed(2);
+  document.getElementById('traspHint').textContent='Valore proposto dal calcolatore (€ '+tfmt(d.prezzoFinale)+'), modificabile a mano prima di generare il preventivo.';
+}
+
+/* ════════════ PDF ════════════ */
+function gv(id){return document.getElementById(id).value.trim();}
+function loadImg(url){
+  return new Promise(res=>{
+    if(!url)return res(null);
+    const img=new Image();img.crossOrigin='anonymous';
+    img.onload=()=>{try{const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;c.getContext('2d').drawImage(img,0,0);res({d:c.toDataURL('image/jpeg',0.82),w:img.naturalWidth,h:img.naturalHeight});}catch(e){res(null);}};
+    img.onerror=()=>res(null);img.src=url;
+  });
+}
+document.getElementById("btnPdf").onclick=async()=>{
+  if(!cart.length){alert("Aggiungi almeno un prodotto.");return;}
+  const btn=document.getElementById("btnPdf");const old=btn.textContent;btn.textContent="⏳ Generazione…";btn.disabled=true;
+  try{await generatePDF();}catch(e){alert("Errore PDF: "+e.message);}
+  btn.textContent=old;btn.disabled=false;
+};
+async function generatePDF(){
+  const {jsPDF}=window.jspdf;const doc=new jsPDF();
+  const R=[212,32,42],B=[22,48,140];const k=last.g>0?last.k:1;
+  // preload immagini
+  const offered=[];const seenB=new Set();
+  for(const it of cart){if(!seenB.has(it.baseName)){seenB.add(it.baseName);offered.push({n:it.baseName,img:it.img,u:it.u});}}
+  const recs=suggestUpsell();
+  const allImgs={};
+  await Promise.all([...offered.map(o=>o.img),...recs.map(r=>r.i)].map(async u=>{if(u&&!(u in allImgs))allImgs[u]=await loadImg(u);}));
+
+  // numero preventivo progressivo (per browser)
+  let cnt=0;try{cnt=parseInt(localStorage.getItem('topeventi_nol_counter')||'0',10)||0;}catch(e){}
+  cnt++;try{localStorage.setItem('topeventi_nol_counter',String(cnt));}catch(e){}
+  const numPrev='NOL'+String(cnt).padStart(3,'0');
+
+  let y=16;
+  doc.setFillColor(...B);doc.rect(0,0,210,30,"F");
+  doc.setTextColor(255);doc.setFontSize(18);doc.setFont(undefined,"bold");doc.text("TOP EVENTI NOLEGGIO",14,15);
+  doc.setFontSize(10);doc.setFont(undefined,"normal");doc.text("Preventivo "+numPrev,14,21);
+  doc.setFontSize(8.5);doc.text("Inviato da: "+gv("inviato_da"),14,26.5);
+  doc.setTextColor(...R);doc.setFontSize(9);doc.text("Data: "+new Date().toLocaleDateString("it-IT"),196,15,{align:"right"});
+  if(gv("intestato")){doc.setTextColor(255);doc.setFont(undefined,"normal");doc.setFontSize(9);doc.text("Intestato a: "+gv("intestato"),196,21,{align:"right"});}
+  y=40;doc.setTextColor(30);
+  const block=(title,lines)=>{doc.setFont(undefined,"bold");doc.setFontSize(11);doc.setTextColor(...B);doc.text(title,14,y);y+=2;doc.setDrawColor(...R);doc.setLineWidth(.4);doc.line(14,y,196,y);y+=6;doc.setFont(undefined,"normal");doc.setFontSize(10);doc.setTextColor(40);String(lines).split("\n").forEach(l=>{doc.text(l,14,y);y+=5;});y+=3;};
+
+  // logistica
+  let logistica;
+  if(modalita==="consegna"){logistica="CONSEGNA A DOMICILIO"+(gv("destination")?"\nIndirizzo: "+gv("destination"):"\nIndirizzo: da definire");}
+  else if(modalita==="dacalcolare"){logistica="CONSEGNA A DOMICILIO\nTrasporto da quantificare";}
+  else logistica="RITIRO E RICONSEGNA IN MAGAZZINO\nMagazzino: "+magazzinoRitiro;
+  block("Logistica",logistica);
+  const dl=dateLabels();
+  const d1=gv("data_consegna")?fmtD(gv("data_consegna")):"da definire";
+  const d2=gv("data_ritiro")?fmtD(gv("data_ritiro")):"da definire";
+  block("Periodo",`${dl.l1}: ${d1}  ·  ${dl.l2}: ${d2}\nGiorni di noleggio: ${last.g>0?last.g:'da definire'}\nFascia ${dl.l1.toLowerCase()}: ${getFascia("consegna")}  ·  Fascia ${dl.l2.toLowerCase()}: ${getFascia("ritiro")}`);
+
+  // tabella prodotti
+  doc.autoTable({startY:y,head:[["Prodotto","Prezzo noleggio","Q.ta","Subtot."]],
+    body:cart.map(it=>[it.n+(it.note&&it.note.trim()?"\nNota: "+it.note.trim():""),euro(it.unit),it.q,euro(it.unit*it.q)]),
+    styles:{fontSize:8.5,cellPadding:2.5},headStyles:{fillColor:B,textColor:255},
+    columnStyles:{1:{halign:"right"},2:{halign:"center"},3:{halign:"right"}},margin:{left:14,right:14}});
+  let yy=doc.lastAutoTable.finalY+8;
+  const rline=(lab,v,bold)=>{doc.setFont(undefined,bold?"bold":"normal");doc.setFontSize(bold?12:10);doc.setTextColor(bold?B[0]:60,bold?B[1]:60,bold?B[2]:60);doc.text(lab,128,yy);doc.text(v,196,yy,{align:"right"});yy+=bold?8:6;};
+  rline("Imponibile noleggio",euro(last.imp));
+  rline("IVA 22%",euro(last.iva));
+  rline("TOTALE NOLEGGIO",euro(last.tot),true);
+
+  // trasporto a parte (valore manuale inserito dall'operatrice)
+  const traspVal=parseFloat(document.getElementById("trasp_manual").value)||0;
+  if(traspVal>0&&modalita==="consegna"){
+    yy+=3;doc.setDrawColor(...B);doc.setLineWidth(.3);doc.line(128,yy-4,196,yy-4);
+    const tIva=traspVal*IVA,tTot=traspVal+tIva;
+    rline("Imponibile trasporto",euro(traspVal));
+    rline("IVA 22%",euro(tIva));
+    rline("TOTALE TRASPORTO",euro(tTot),true);
+  } else if(modalita==="dacalcolare"){
+    const selDac=document.querySelector('input[name="dacalc_opt"]:checked');
+    const phrase=selDac?selDac.value:"COSTO DA QUANTIFICARE";
+    yy+=3;doc.setDrawColor(...B);doc.setLineWidth(.3);doc.line(14,yy-3,196,yy-3);
+    doc.setFont(undefined,"bold");doc.setFontSize(10);doc.setTextColor(...B);doc.text("Costo trasporto:",14,yy);yy+=5;
+    doc.setFont(undefined,"normal");doc.setFontSize(9.5);doc.setTextColor(45);
+    doc.splitTextToSize(phrase,182).forEach(l=>{doc.text(l,14,yy);yy+=5;});yy+=1;
+  }
+
+  // condizioni selezionate (sotto al totale)
+  const conds=Array.from(document.querySelectorAll('#condizioni input:checked')).map(c=>c.value);
+  if(conds.length){
+    yy+=4;if(yy>250){doc.addPage();yy=20;}
+    doc.setFont(undefined,"bold");doc.setFontSize(9.5);doc.setTextColor(...B);doc.text("Condizioni",14,yy);yy+=5;
+    doc.setFont(undefined,"normal");doc.setFontSize(9);doc.setTextColor(45);
+    conds.forEach(c=>{doc.text("•  "+c,16,yy);yy+=5;});
+  }
+
+  // nota fissa sempre presente
+  yy+=4;if(yy>250){doc.addPage();yy=20;}
+  doc.setFont(undefined,"bold");doc.setFontSize(9);doc.setTextColor(60);doc.text("Il costo di trasporto indicato:",14,yy);yy+=5;
+  doc.setFont(undefined,"normal");doc.setFontSize(8.8);doc.setTextColor(60);
+  doc.splitTextToSize("- è valido per trasporti effettuati nelle date sopraindicate;",178).forEach(l=>{doc.text(l,16,yy);yy+=4.6;});
+  doc.splitTextToSize("- prevede che consegna e ritiro possano essere effettuati da Top Eventi in qualsiasi orario all'interno delle fasce orarie sopraindicate.",178).forEach(l=>{doc.text(l,16,yy);yy+=4.6;});
+  yy+=2;
+
+  // note generali (prima del riquadro rosso)
+  if(gv("note")){yy+=2;if(yy>255){doc.addPage();yy=20;}doc.setFont(undefined,"bold");doc.setFontSize(9);doc.setTextColor(...B);doc.text("Note",14,yy);yy+=5;doc.setFont(undefined,"normal");doc.setFontSize(8.8);doc.setTextColor(60);doc.splitTextToSize(gv("note"),182).forEach(l=>{doc.text(l,14,yy);yy+=4.6;});yy+=2;}
+
+  // box rosso
+  yy+=4;if(yy>235){doc.addPage();yy=20;}
+  const traspTxt="La disponibilità del materiale è soggetta a riconferma al momento dell'ordine. Qualora la nostra offerta risultasse di Vostro interesse, attendiamo i Vostri dati di fatturazione per invio offerta ufficiale: per confermare il noleggio sarà richiesto il pagamento anticipato dell'intero importo salvo eventuali accordi commerciali già presi.";
+  doc.setFontSize(8.5);const tLines=doc.splitTextToSize(traspTxt,174);const boxH=8+tLines.length*4.2;
+  doc.setFillColor(255,243,243);doc.setDrawColor(...R);doc.setLineWidth(.7);doc.roundedRect(14,yy,182,boxH,2,2,"FD");
+  doc.setTextColor(120,40,40);doc.text(tLines,18,yy+7);yy+=boxH+8;
+
+  // immagini prodotti offerti
+  const grid=(title,items)=>{ // items: {name, priceLabel, url, link}
+    if(!items.length)return;
+    if(yy>250){doc.addPage();yy=20;}
+    doc.setFont(undefined,"bold");doc.setFontSize(11);doc.setTextColor(...B);doc.text(title,14,yy);doc.setDrawColor(...R);doc.setLineWidth(.4);doc.line(14,yy+2,196,yy+2);yy+=9;
+    const cols=3,cw=60,ch=46,gap=2,imgH=30;
+    items.forEach((it,i)=>{
+      const col=i%cols;
+      if(col===0&&i>0)yy+=ch+6;
+      if(col===0&&yy+ch>282){doc.addPage();yy=20;}
+      const x=14+col*(cw+gap);
+      const im=allImgs[it.url];
+      doc.setDrawColor(225);doc.setLineWidth(.3);doc.roundedRect(x,yy,cw,ch,2,2,"S");
+      if(im){const ratio=im.w/im.h;let w=cw-8,h=w/ratio;if(h>imgH){h=imgH;w=h*ratio;}doc.addImage(im.d,'JPEG',x+(cw-w)/2,yy+3,w,h);}
+      else{doc.setFontSize(7);doc.setTextColor(170);doc.text("(immagine n/d)",x+cw/2,yy+imgH/2,{align:"center"});}
+      doc.setFontSize(6.8);doc.setTextColor(40);
+      const nm=doc.splitTextToSize(it.name,cw-6);
+      doc.text(nm.slice(0,2),x+3,yy+imgH+6);
+      if(it.priceLabel){doc.setFont(undefined,"bold");doc.setTextColor(...B);doc.setFontSize(7);doc.text(it.priceLabel,x+3,yy+ch-2);doc.setFont(undefined,"normal");}
+      if(it.link)doc.link(x,yy,cw,ch,{url:it.link});
+    });
+    yy+=ch+10;
+  };
+  grid("Prodotti selezionati",offered.map(o=>({name:cleanName(o.n),priceLabel:"",url:o.img,link:o.u})));
+  grid("Ti consigliamo anche · clicca l'immagine per aprire il prodotto",recs.map(r=>({name:cleanName(r.n),priceLabel:"da "+euro(Math.min(...r.v.map(v=>v.p))),url:r.i,link:r.u})));
+
+  doc.save("Preventivo_TopEventi.pdf");
+}
+
+/* ════════════ ASSISTENTE AI ════════════ */
+const AI_ENDPOINT="/.netlify/functions/interpreta";
+const rulesEl=document.getElementById('ai_rules');
+try{rulesEl.value=localStorage.getItem('ai_rules')||'';}catch(e){}
+rulesEl.oninput=()=>{try{localStorage.setItem('ai_rules',rulesEl.value);}catch(e){}};
+document.getElementById('btnRules').onclick=()=>document.getElementById('rulesBox').classList.toggle('hide');
+document.getElementById('btnAI').onclick=runAI;
+async function runAI(){
+  const email=document.getElementById('ai_email').value.trim();
+  if(!email){alert('Incolla la mail del cliente.');return;}
+  const status=document.getElementById('aiStatus');status.textContent='⏳ Analisi in corso…';
+  const btn=document.getElementById('btnAI');btn.disabled=true;
+  const catalog=PRODOTTI.map((p,i)=>({id:i,n:cleanName(p.n),c:p.c,pmin:Math.min(...p.v.map(v=>v.p)),varianti:p.v.length>1?p.v.map(v=>v.l):undefined}));
+  const rules=rulesEl.value.split('\n').map(s=>s.trim()).filter(Boolean);
+  try{
+    const r=await fetch(AI_ENDPOINT,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({emailText:email,catalog,rules})});
+    const data=await r.json();
+    if(!r.ok||data.error){throw new Error(data.error||('HTTP '+r.status));}
+    applyAI(data);
+    status.textContent='✓ Bozza precompilata: controlla e modifica tutto ciò che serve.';
+  }catch(e){status.textContent='Errore: '+e.message+' — verifica che il backend e la chiave AI siano configurati su Netlify.';}
+  btn.disabled=false;
+}
+function setFascia(which,val){
+  if(!val)return;const s=document.getElementById('fascia_'+which);
+  const opt=Array.from(s.options).find(o=>o.value.toLowerCase()===String(val).toLowerCase()||o.value.toLowerCase().includes(String(val).toLowerCase()));
+  if(opt){s.value=opt.value;toggleFasciaTxt(which);}
+  else{s.value='__custom__';toggleFasciaTxt(which);document.getElementById('fascia_'+which+'_txt').value=val;}
+}
+function applyAI(d){
+  if(d.modalita){const b=document.querySelector('#segMod button[data-m="'+d.modalita+'"]');if(b)b.click();}
+  if(d.modalita==='ritiro'&&d.magazzino){const mg=String(d.magazzino).toLowerCase();const w=Array.from(document.querySelectorAll('.wh')).find(x=>x.dataset.w.toLowerCase().includes(mg.includes('vicenza')||mg.includes('brendola')?'vicenza':'milano'));if(w)w.click();}
+  if(d.indirizzo){const el=document.getElementById('destination');if(el)el.value=d.indirizzo;}
+  if(d.data_consegna)document.getElementById('data_consegna').value=d.data_consegna;
+  if(d.data_ritiro)document.getElementById('data_ritiro').value=d.data_ritiro;
+  setFascia('consegna',d.fascia_consegna);setFascia('ritiro',d.fascia_ritiro);
+  cart.length=0;
+  (d.prodotti||[]).forEach(it=>{
+    const p=PRODOTTI[it.id];if(!p)return;
+    let vj=0;
+    if(p.v.length>1&&it.variante){const idx=p.v.findIndex(v=>v.l.toLowerCase().includes(String(it.variante).toLowerCase()));if(idx>=0)vj=idx;}
+    const v=p.v[vj];const vpart=v.l?' — '+p.o+': '+v.l:'';
+    cart.push({key:p.n+'||'+v.l,n:cleanName(p.n)+vpart,baseName:p.n,variant:vpart,cat:p.c,img:p.i,u:p.u,p:v.p,q:it.qta||1});
+  });
+  refresh();
+  if(d.veicolo&&document.getElementById('v-'+d.veicolo))selectVehicle(d.veicolo);
+  if(d.carico===50||d.carico===100)selectLoad(d.carico);
+  const box=document.getElementById('aiResult');box.classList.remove('hide');
+  const prod=(d.prodotti||[]).length;
+  box.innerHTML='<div style="background:#f6f2ff;border:1px solid #e0d4ff;border-radius:10px;padding:14px">'
+    +'<b style="color:#7b2ff7">Interpretazione AI</b>'
+    +'<div style="margin-top:6px;font-size:13.5px;white-space:pre-wrap">'+String(d.interpretazione||'').replace(/</g,'&lt;')+'</div>'
+    +'<div class="hint" style="margin-top:8px">'+prod+' prodotti inseriti'+(d.veicolo?' · furgone proposto: '+d.veicolo:'')+'. Verifica km/trasporto col calcolatore e correggi dove serve.</div></div>';
+}
+
+/* ════════════ RENTHUB (disponibilità materiale) ════════════ */
+const RENTHUB_URL="https://topeventistore.renthubsoftware.com/dashboard";
+document.getElementById('rhTab').onclick=()=>window.open(RENTHUB_URL,'_blank','noopener');
+document.getElementById('rhWin').onclick=()=>window.open(RENTHUB_URL,'renthub','width=580,height=840,left='+(screen.availWidth-600)+',top=60');
+
+/* ════════════ TRELLO (piano trasporti, sola consultazione) ════════════ */
+const TRELLO_KEY="c9ea5819674825d1f1e9f8193947774f"; // Trello API key (il segreto NON va inserito qui)
+const TR_LABEL_COLORS={green:'#61bd4f',yellow:'#f2d600',orange:'#ff9f1a',red:'#eb5a46',purple:'#c377e0',blue:'#0079bf',sky:'#00c2e0',lime:'#51e898',pink:'#ff78cb',black:'#344563'};
+function loadTrello(){
+  if(!TRELLO_KEY){
+    document.getElementById('trelloMsg').textContent="Per attivare il piano trasporti inserisci la tua Trello API key nel codice (variabile TRELLO_KEY).";
+    document.getElementById('btnTrelloConnect').disabled=true;return;
+  }
+  function addClient(){
+    const s=document.createElement('script');s.src="https://api.trello.com/1/client.js?key="+TRELLO_KEY;
+    s.onload=()=>{try{if(window.Trello&&Trello.authorized&&Trello.authorized())showTrelloPanel();}catch(e){}};
+    s.onerror=()=>{document.getElementById('trelloMsg').textContent="Impossibile caricare la libreria Trello: controlla la connessione o la API key.";};
+    document.head.appendChild(s);
+  }
+  if(window.jQuery){addClient();}
+  else{
+    const j=document.createElement('script');
+    j.src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js";
+    j.onload=addClient;j.onerror=addClient;
+    document.head.appendChild(j);
+  }
+}
+document.getElementById('btnTrelloConnect').onclick=()=>{
+  if(!window.Trello){alert('Libreria Trello non caricata: verifica la API key.');return;}
+  Trello.authorize({type:'popup',name:'Top Eventi Preventivatore',scope:{read:true,write:false},expiration:'never',success:showTrelloPanel,error:()=>alert('Autorizzazione Trello annullata o non riuscita.')});
+};
+function showTrelloPanel(){
+  document.getElementById('trelloConnect').classList.add('hide');
+  document.getElementById('trelloPanel').classList.remove('hide');
+  Trello.get('/members/me/boards',{fields:'name',filter:'open'},boards=>{
+    const sel=document.getElementById('trelloBoard');
+    sel.innerHTML='<option value="">— Scegli una bacheca —</option>'+boards.map(b=>`<option value="${b.id}">${b.name.replace(/</g,'&lt;')}</option>`).join('');
+  },()=>alert('Errore nel caricamento delle bacheche.'));
+}
+document.getElementById('trelloBoard').onchange=e=>{if(e.target.value)loadBoard(e.target.value);};
+document.getElementById('btnTrelloReload').onclick=()=>{const v=document.getElementById('trelloBoard').value;if(v)loadBoard(v);};
+document.getElementById('btnTrelloLogout').onclick=()=>{try{if(window.Trello)Trello.deauthorize();}catch(e){}document.getElementById('trelloPanel').classList.add('hide');document.getElementById('trelloConnect').classList.remove('hide');};
+function loadBoard(id){
+  const body=document.getElementById('trelloBody');body.innerHTML='<div class="empty">Caricamento…</div>';
+  Trello.get('/boards/'+id+'/lists',{cards:'open',card_fields:'name,due,labels,shortUrl'},lists=>{
+    if(!lists.length){body.innerHTML='<div class="empty">Bacheca senza liste.</div>';return;}
+    body.innerHTML=lists.map(l=>{
+      const cards=(l.cards||[]).map(c=>{
+        const labs=(c.labels||[]).map(lb=>`<span class="tr-label" style="background:${TR_LABEL_COLORS[lb.color]||'#b3bac5'}" title="${(lb.name||'').replace(/"/g,'')}"></span>`).join('');
+        const due=c.due?`<div class="tr-due">📅 ${new Date(c.due).toLocaleDateString('it-IT')}</div>`:'';
+        return `<a class="tr-card" href="${c.shortUrl}" target="_blank" rel="noopener">${labs?`<div class="tr-labels">${labs}</div>`:''}${(c.name||'').replace(/</g,'&lt;')}${due}</a>`;
+      }).join('')||'<div class="empty" style="font-size:12px;padding:6px">Nessuna card</div>';
+      return `<div class="tr-list"><h4>${(l.name||'').replace(/</g,'&lt;')}<span>${(l.cards||[]).length}</span></h4>${cards}</div>`;
+    }).join('');
+  },()=>{body.innerHTML='<div class="empty">Errore nel caricamento della bacheca.</div>';});
+}
+loadTrello();
+
+/* ====== Google Maps loader (chiave ufficio) ====== */
+(function(){const s=document.createElement('script');s.src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyrBjt_WqDVIODcYbr9JbKfwLe-z-Ln7g&libraries=places&callback=initMaps";s.async=true;s.defer=true;document.head.appendChild(s);})();
+</script>
+</body>
+</html>
